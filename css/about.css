@@ -1,0 +1,60 @@
+/* Tùy biến biến màu chủ đạo CSS3 */
+:root {
+    --primary-color: #52a851;
+    --secondary-color: #2f842e;
+    --accent-color: #ff6900;
+    --light-yellow: #fff9e6;
+    --text-dark: #333333;
+    --bg-light: #f8f9fa;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-dark);
+    background-color: #fff;
+}
+
+/* Navbar styles */
+.navbar-brand img {
+    height: 40px;
+}
+
+/* Button hiệu ứng mượt mà */
+.btn-fresh {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 25px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-fresh:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Định dạng tiêu đề và danh sách bài viết giới thiệu */
+main section h3 {
+    color: var(--secondary-color);
+}
+
+main ul li {
+    margin-bottom: 8px;
+}
+
+/* Footer styles */
+footer {
+    background-color: #1b471b;
+    color: #fff;
+}
+
+footer a {
+    color: #ddd;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+footer a:hover {
+    color: var(--primary-color);
+}

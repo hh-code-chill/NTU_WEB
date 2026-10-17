@@ -1,0 +1,63 @@
+/* ==========================================
+   CSS CHO TRANG LIÊN HỆ - NÔNG SẢN DŨNG HÀ
+   ========================================== */
+
+:root {
+    --primary-color: #52a851;
+    --secondary-color: #2f842e;
+    --dark-color: #1b471b;
+    --light-bg: #f4f4f4;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+.bg-primary-custom {
+    background-color: var(--primary-color) !important;
+}
+
+.text-primary-custom {
+    color: var(--primary-color) !important;
+}
+
+/* Hiệu ứng hover thẻ card */
+.card-custom {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(82, 168, 81, 0.2);
+}
+
+/* Nút bấm mượt mà */
+.btn-custom {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 30px;
+    padding: 10px 25px;
+    transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.contact-info-icon {
+    width: 45px;
+    height: 45px;
+    background: rgba(82, 168, 81, 0.1);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}

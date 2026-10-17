@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên Hệ - Nông Sản Dũng Hà</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+
+    <!-- Navbar Component -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm" style="background-color: var(--dark-color);">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Nông Sản Dũng Hà</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav text-uppercase fw-semibold">
+                    <li class="nav-item"><a class="nav-link" href="#">Trang Chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Sản Phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Liên Hệ</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="py-5 text-center text-white" style="background: linear-gradient(rgba(27,71,27,0.8), rgba(27,71,27,0.8)), url('https://nongsandungha.com/wp-content/uploads/2024/07/logo.jpg') center/cover;">
+        <div class="container">
+            <h1 class="fw-bold display-5">Thông Tin Liên Hệ</h1>
+            <p class="lead mb-0">Luôn sẵn sàng lắng nghe và phục vụ quý khách hàng tận tâm!</p>
+        </div>
+    </header>
+
+    <!-- Main Contact Section -->
+    <section class="container my-5">
+        <div class="row g-4">
+            
+            <!-- Cột thông tin chi nhánh & Giờ làm việc -->
+            <div class="col-lg-5">
+                <div class="card card-custom p-4 shadow-sm h-100 bg-light">
+                    <h3 class="fw-bold mb-4 text-primary-custom">Hệ Thống Cửa Hàng</h3>
+
+                    <!-- Trụ sở chính -->
+                    <div class="d-flex align-items-start mb-3">
+                        <div class="contact-info-icon me-3"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Trụ sở chính Hà Nội:</h6>
+                            <p class="text-muted mb-0">Số 11 Kim Đồng, đường Giáp Bát, phường Tương Mai, TP. Hà Nội[cite: 3].</p>
+                        </div>
+                    </div>
+
+                    <!-- Chi nhánh Trung Kính -->
+                    <div class="d-flex align-items-start mb-3">
+                        <div class="contact-info-icon me-3"><i class="fas fa-store"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Chi nhánh Cầu Giấy:</h6>
+                            <p class="text-muted mb-0">A11 – Ngõ 100 – Đường Trung Kính – Phường Yên Hòa – Quận Cầu Giấy[cite: 3].</p>
+                        </div>
+                    </div>
+
+                    <!-- Chi nhánh HCM -->
+                    <div class="d-flex align-items-start mb-3">
+                        <div class="contact-info-icon me-3"><i class="fas fa-building"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Chi nhánh TP.HCM:</h6>
+                            <p class="text-muted mb-0">Số 02/B Khu Phố 3, đường Trung Mỹ Tây 13, Quận 12, TP. Hồ Chí Minh[cite: 3].</p>
+                        </div>
+                    </div>
+
+                    <!-- Hotline & Giờ làm việc -->
+                    <hr class="my-3">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="contact-info-icon me-3"><i class="fas fa-phone-alt"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Hotline Hỗ Trợ:</h6>
+                            <p class="text-muted mb-0"><a href="tel:0866918366" class="text-decoration-none text-dark fw-bold">0866.918.366</a>[cite: 3]</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <div class="contact-info-icon me-3"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Giờ Làm Việc:</h6>
+                            <p class="text-muted mb-0">07:00 - 12:00 và 13:30 - 22:00 hằng ngày[cite: 3].</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột Form gửi phản hồi & Bản đồ Iframe -->
+            <div class="col-lg-7">
+                <div class="card card-custom p-4 shadow-sm mb-4">
+                    <h3 class="fw-bold mb-3 text-primary-custom">Gửi Tin Nhắn Phản Hồi</h3>
+                    
+                    <!-- Alerts -->
+                    <div id="formAlert" class="alert alert-success d-none" role="alert">
+                        Cảm ơn bạn đã liên hệ! Thông tin của bạn đã được gửi thành công.
+                    </div>
+
+                    <!-- Form Validation -->
+                    <form id="contactForm" novalidate>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="name" class="form-label fw-semibold">Họ và tên <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" placeholder="Nhập họ và tên..." required>
+                                <div class="invalid-feedback">Vui lòng nhập họ và tên của bạn.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label fw-semibold">Số điện thoại <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="phone" placeholder="Ví dụ: 0912345678" required>
+                                <div class="invalid-feedback">Vui lòng nhập đúng định dạng số điện thoại (10-11 chữ số).</div>
+                            </div>
+                            <div class="col-12">
+                                <label for="email" class="form-label fw-semibold">Địa chỉ Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                                <div class="invalid-feedback">Vui lòng nhập đúng định dạng email.</div>
+                            </div>
+                            <div class="col-12">
+                                <label for="password" class="form-label fw-semibold">Mật khẩu tài khoản (nếu có đăng ký)</label>
+                                <input type="password" class="form-control" id="password" placeholder="Từ 6-8 ký tự trở lên">
+                                <div class="invalid-feedback">Mật khẩu phải có độ dài từ tối thiểu 6-8 ký tự.</div>
+                            </div>
+                            <div class="col-12">
+                                <label for="message" class="form-label fw-semibold">Nội dung tin nhắn <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="message" rows="4" placeholder="Nhập nội dung phản hồi..." required></textarea>
+                                <div class="invalid-feedback">Nội dung không được để trống.</div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-custom w-100 shadow-sm">Gửi Phản Hồi Ngay</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Bản đồ Google Maps nhúng (Iframe) -->
+                <div class="card card-custom p-2 shadow-sm">
+                    <div class="ratio ratio-16x9 rounded overflow-hidden">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.305118742188!2d105.84517!3d20.9806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac5c8e3c1a3b%3A0x6b2458e0a13d79b9!2zROG5nIEjDoCwgS2ltIMSQ4buMs2MsIEdpw6FwIELDtnQsIEhhacSBoqJuLCBUaMOjbmggcGjhu5EgSMOgIE7hu5lp!5e0!3m2!1svi!2svn!4v1650000000000!5m2!1svi!2svn" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-white mt-5" style="background-color: var(--dark-color);">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 Nông Sản Dũng Hà. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/contact.js"></script>
+</body>
+</html>
