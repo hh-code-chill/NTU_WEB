@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh mục sản phẩm | Cửa hàng</title>
+    <link rel="stylesheet" href="css/shop.css">
+</head>
+<body>
+    <!-- Header giả định -->
+    <header class="header">
+        <div class="container">
+            <h2>Logo</h2>
+            <nav>
+                <a href="#">Trang chủ</a>
+                <a href="#" class="active">Danh mục</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb container">
+        <a href="#">Trang chủ</a> / <span>Sản phẩm</span>
+    </div>
+
+    <main class="shop-container container">
+        <!-- Sidebar - Bộ lọc bên trái -->
+        <aside class="shop-sidebar">
+            <!-- Lọc theo danh mục -->
+            <div class="filter-widget">
+                <h3 class="widget-title">Danh mục sản phẩm</h3>
+                <ul class="category-list">
+                    <li><a href="#">Rau củ sạch <span>(12)</span></a></li>
+                    <li><a href="#">Hoa quả nhập khẩu <span>(8)</span></a></li>
+                    <li><a href="#">Đồ khô <span>(15)</span></a></li>
+                    <li><a href="#">Thực phẩm tươi sống <span>(5)</span></a></li>
+                </ul>
+            </div>
+
+            <!-- Lọc theo tầm giá -->
+            <div class="filter-widget">
+                <h3 class="widget-title">Lọc theo giá</h3>
+                <form id="price-filter-form">
+                    <div class="price-inputs">
+                        <input type="number" id="min-price" placeholder="Tối thiểu">
+                        <span>-</span>
+                        <input type="number" id="max-price" placeholder="Tối đa">
+                    </div>
+                    <button type="submit" class="btn-filter">Lọc</button>
+                </form>
+            </div>
+
+            <!-- Lọc theo nhãn hiệu -->
+            <div class="filter-widget">
+                <h3 class="widget-title">Thương hiệu</h3>
+                <ul class="brand-list">
+                    <li>
+                        <label><input type="checkbox" name="brand" value="dlat"> Đà Lạt GAP</label>
+                    </li>
+                    <li>
+                        <label><input type="checkbox" name="brand" value="organic"> Organic Farm</label>
+                    </li>
+                    <li>
+                        <label><input type="checkbox" name="brand" value="global"> Global Check</label>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Nội dung chính - Lưới sản phẩm -->
+        <section class="shop-content">
+            <!-- Thanh sắp xếp (Sorting) -->
+            <div class="shop-toolbar">
+                <p class="result-count">Hiển thị 1–9 trong 24 kết quả</p>
+                <div class="sorting">
+                    <label for="sort-by">Sắp xếp theo:</label>
+                    <select id="sort-by" class="sort-select">
+                        <option value="default">Mặc định</option>
+                        <option value="date">Mới nhất</option>
+                        <option value="price-asc">Giá: Tăng dần</option>
+                        <option value="price-desc">Giá: Giảm dần</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grid System cho Sản phẩm -->
+            <div class="product-grid" id="product-grid">
+                <!-- Product Item 1 -->
+                <article class="product-card">
+                    <div class="badge sale">-15%</div>
+                    <div class="product-img">
+                        <img src="https://via.placeholder.com/300" alt="Ba Kích Tím">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title"><a href="#">Ba Kích Tím Khô Rút Lõi</a></h3>
+                        <div class="product-price">
+                            <span class="price-amount">120.000₫</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-id="1">Mua ngay</button>
+                    </div>
+                </article>
+
+                <!-- Product Item 2 -->
+                <article class="product-card">
+                    <div class="product-img">
+                        <img src="https://via.placeholder.com/300" alt="Bạc Hà Sấy Khô">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title"><a href="#">Bạc Hà Sấy Khô</a></h3>
+                        <div class="product-price">
+                            <span class="price-amount">115.000₫</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-id="2">Mua ngay</button>
+                    </div>
+                </article>
+
+                <!-- Product Item 3 -->
+                <article class="product-card">
+                    <div class="badge new">Mới</div>
+                    <div class="product-img">
+                        <img src="https://via.placeholder.com/300" alt="Bạch Hoa Xà">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title"><a href="#">Bạch Hoa Xà Khô</a></h3>
+                        <div class="product-price">
+                            <span class="price-amount">40.000₫</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-id="3">Mua ngay</button>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Thanh phân trang (Pagination) -->
+            <nav class="pagination">
+                <ul class="page-numbers">
+                    <li><span class="page-number current">1</span></li>
+                    <li><a class="page-number" href="#">2</a></li>
+                    <li><a class="page-number" href="#">3</a></li>
+                    <li><span class="dots">...</span></li>
+                    <li><a class="page-number" href="#">10</a></li>
+                    <li><a class="next page-number" href="#">&raquo;</a></li>
+                </ul>
+            </nav>
+        </section>
+    </main>
+
+    <script src="js/shop.js"></script>
+</body>
+</html>

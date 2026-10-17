@@ -1,0 +1,40 @@
+/* Styling cho Thumbnail Gallery */
+.thumb-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+    border: 2px solid transparent;
+}
+
+.thumb-img:hover {
+    opacity: 1;
+}
+
+.thumb-img.active {
+    opacity: 1;
+    border-color: #dc3545; /* Màu đỏ nổi bật cho thumbnail đang chọn */
+}
+
+/* Styling cho Biến thể (Variants) */
+.variant-btn {
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.variant-btn.active, .variant-btn:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+/* Ẩn scrollbar cho khu vực thumbnail nếu nó tràn chiều ngang */
+.thumbnail-gallery::-webkit-scrollbar {
+    height: 6px;
+}
+.thumbnail-gallery::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}

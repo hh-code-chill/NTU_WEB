@@ -1,0 +1,222 @@
+/* Khai báo biến CSS */
+:root {
+  --primary-green: #52a851;
+  --primary-green-dark: #3b7b3b;
+  --primary-green-50: #f1f8e9;
+  --custom-orange: #fd7e14;
+  --light-gray: #f8f9fa;
+}
+
+/* Các lớp tiện ích */
+.bg-primary-green {
+  background-color: var(--primary-green) !important;
+}
+.bg-primary-green-dark {
+  background-color: var(--primary-green-dark) !important;
+}
+.text-primary-green {
+  color: var(--primary-green) !important;
+}
+.text-custom-orange {
+  color: var(--custom-orange) !important;
+}
+
+/* Tùy chỉnh Nút bấm & Icon Header */
+.btn-primary-green {
+  background-color: var(--primary-green);
+  border: none;
+}
+.btn-primary-green:hover {
+  background-color: var(--primary-green-dark);
+}
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.contact-box {
+  border-color: var(--primary-green) !important;
+}
+
+/* Thanh tìm kiếm */
+.search-input {
+  border: 1px solid #ced4da;
+  border-radius: 20px;
+}
+.search-input:focus {
+  box-shadow: none;
+  border-color: var(--primary-green);
+}
+
+/* Menu Điều Hướng Ngang */
+.navbar-nav .nav-link {
+  transition: color 0.2s;
+  font-size: 0.85rem;
+}
+.navbar-nav .nav-link:hover {
+  color: var(--primary-green) !important;
+}
+
+/* Mở dropdown menu khi hover vào cấp cha */
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* ---- DROPDOWN DANH MỤC (SIDEBAR) ---- */
+.z-index-dropdown {
+  z-index: 1000;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Cấu hình hiển thị cho menu thả xuống */
+.category-dropdown {
+  top: 100%; /* Nằm ngay dưới nút toggle */
+  border-radius: 0 0 5px 5px;
+}
+.category-item > a {
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+.category-item:hover > a {
+  background-color: var(--light-gray);
+  color: var(--primary-green) !important;
+}
+
+/* Cấu hình Submenu (Menu cấp 2 - Đồ khô) */
+.category-item .submenu {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  border-radius: 0 5px 5px 0;
+  margin-left: -1px; /* Đè lên viền một chút */
+}
+
+/* Khi hover vào thẻ li có class has-submenu thì hiện submenu */
+.category-item.has-submenu:hover .submenu {
+  opacity: 1;
+  visibility: visible;
+  display: block !important;
+}
+.submenu a {
+  transition: color 0.2s;
+}
+.submenu a:hover {
+  color: var(--primary-green) !important;
+  background-color: var(--light-gray);
+}
+
+/* Class quản lý trạng thái ẩn/hiện của dropdown/list Chuyên mục */
+.category-menu-list {
+  transition: all 0.3s ease;
+  opacity: 1;
+  visibility: visible;
+  max-height: 500px; /* Chiều cao tùy chỉnh theo menu của bạn */
+  overflow: hidden;
+}
+
+/* Class được gán vào bằng JS khi cuộn trang */
+.category-menu-list.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/*  SECTION SUPER SALE */
+/* Custom CSS cho thanh cuộn sản phẩm */
+#productSlider {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* Định kích thước thẻ sản phẩm trong slider */
+.product-card-wrapper {
+  width: calc(20% - 13px);
+  min-width: 200px;
+}
+
+/* Định kích thước nút điều hướng */
+#prevBtn,
+#nextBtn {
+  width: 36px;
+  height: 36px;
+  opacity: 0.85;
+}
+
+/* Kích thước chữ và khoảng cách trong card */
+.product-title {
+  font-size: 0.9rem;
+  min-height: 2.7rem;
+}
+
+.product-price {
+  font-size: 0.95rem;
+}
+
+/* PRESS & CONTACT HOTLINE SECTION */
+/* Styling cho Section Báo Chí & Hotline */
+.press-title {
+  letter-spacing: 0.5px;
+  font-size: 1.35rem;
+}
+
+.press-img {
+  max-height: 90px;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.press-logo-item:hover .press-img {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.dept-name {
+  font-size: 0.95rem;
+}
+
+.dept-phone {
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+}
+
+.dept-phone:hover {
+  color: #198754 !important; /* Màu xanh lá chuẩn Bootstrap success */
+}
+/* ---- FOOTER ---- */
+.footer-links a {
+  color: var(--light-gray);
+  text-decoration: none;
+  transition:
+    color 0.3s ease,
+    padding-left 0.3s ease;
+}
+.footer-links a:hover {
+  color: var(--custom-orange) !important;
+  padding-left: 5px;
+}
+/* Tùy chỉnh logo chứng nhận nền trong suốt */
+.badge-img {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+.badge-img:hover {
+  opacity: 0.85;
+}
