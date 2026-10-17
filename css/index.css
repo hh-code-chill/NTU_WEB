@@ -1,4 +1,11 @@
 /* Khai báo biến CSS */
+/* Reset cơ bản */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
   --primary-green: #52a851;
   --primary-green-dark: #3b7b3b;
@@ -19,6 +26,9 @@
 }
 .text-custom-orange {
   color: var(--custom-orange) !important;
+}
+.bg-light-blue {
+  background-color: #f0f4f9;
 }
 
 /* Tùy chỉnh Nút bấm & Icon Header */
@@ -239,4 +249,10 @@
 
 .badge-img:hover {
   opacity: 0.85;
+}
+
+/* Màu xanh lá đậm cho dải Copyright dưới chân Footer */
+.footer-copyright {
+  background-color: #1e4d2b; /* Màu xanh lá sẫm đậm hơn màu footer chính */
+  width: 100%;
 }

@@ -1,40 +1,59 @@
-/* Styling cho Thumbnail Gallery */
-.thumb-img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
+/* Tùy chỉnh riêng cho trang Chi tiết sản phẩm */
+.section-header-green {
+    background-color: #4cae4c;
+    color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 4px 4px 0 0;
+}
+
+/* Biến thể & Tùy chọn giao hàng */
+.location-option.active,
+.variant-option.active {
+    border-color: #198754 !important;
+    background-color: #e8f5e9 !important;
+    color: #198754 !important;
+    font-weight: bold;
+}
+
+/* Nút Thêm vào giỏ hàng */
+.btn-success-light {
+    background-color: #a3d19f;
+    color: #ffffff;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-success-light:hover {
+    background-color: #198754;
+    color: #ffffff;
+}
+
+/* Thumbnail ảnh nhỏ */
+.product-thumb {
     cursor: pointer;
-    transition: all 0.3s ease;
-    opacity: 0.6;
-    border: 2px solid transparent;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
 }
 
-.thumb-img:hover {
+.product-thumb:hover,
+.product-thumb.active {
     opacity: 1;
+    border-color: #198754 !important;
 }
 
-.thumb-img.active {
-    opacity: 1;
-    border-color: #dc3545; /* Màu đỏ nổi bật cho thumbnail đang chọn */
+/* Khung Mục Lục */
+.toc-box {
+    border: 1px solid #e0e0e0;
 }
 
-/* Styling cho Biến thể (Variants) */
-.variant-btn {
-    border-radius: 4px;
-    transition: all 0.2s;
+.toc-title {
+    background-color: #f8f9fa;
 }
 
-.variant-btn.active, .variant-btn:hover {
-    background-color: #dc3545;
-    color: white;
-    border-color: #dc3545;
+.toc-list li {
+    margin-bottom: 4px;
 }
 
-/* Ẩn scrollbar cho khu vực thumbnail nếu nó tràn chiều ngang */
-.thumbnail-gallery::-webkit-scrollbar {
-    height: 6px;
-}
-.thumbnail-gallery::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 3px;
+.text-justify {
+    text-align: justify;
 }
