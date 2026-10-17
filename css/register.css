@@ -1,0 +1,105 @@
+/* ==========================================
+   CSS CHO TRANG ĐĂNG KÝ - FRESHFARM
+   ========================================== */
+
+/* Tùy biến biến màu chủ đạo CSS3 (đồng bộ với trang Giới thiệu, Liên hệ) */
+:root {
+    --primary-color: #52a851;
+    --secondary-color: #2f842e;
+    --accent-color: #ff6900;
+    --light-yellow: #fff9e6;
+    --dark-color: #1b471b;
+    --text-dark: #333333;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-dark);
+    background-color: #fff;
+}
+
+/* Navbar styles */
+.navbar-brand img {
+    height: 40px;
+}
+
+/* Button hiệu ứng mượt mà */
+.btn-fresh {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 25px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-fresh:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-custom {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: #e05a00;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(255, 105, 0, 0.3);
+}
+
+/* Hiệu ứng hover thẻ card */
+.card-custom {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-custom:hover {
+    box-shadow: 0 10px 20px rgba(82, 168, 81, 0.2);
+}
+
+.page-title {
+    color: var(--secondary-color);
+    font-weight: 700;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(82, 168, 81, 0.2);
+}
+
+/* Footer styles */
+footer {
+    background-color: var(--dark-color);
+    color: #fff;
+}
+
+footer a {
+    color: #ddd;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+footer a:hover {
+    color: var(--primary-color);
+}
+
+/* Khung form đăng ký */
+.auth-section {
+    background-color: var(--light-yellow);
+}
+
+.auth-card {
+    max-width: 520px;
+    margin: auto;
+}
