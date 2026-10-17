@@ -164,6 +164,26 @@
   font-size: 0.95rem;
 }
 
+/* Tùy chỉnh thẻ sản phẩm dạng Link */
+.product-card-link {
+  cursor: pointer;
+  display: flex;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Hiệu ứng hover nổi nhẹ card sản phẩm */
+.product-card-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Đảm bảo chữ tiêu đề giữ nguyên màu khi hover */
+.product-card-link:hover .product-title {
+  color: #198754 !important; /* Đổi sang màu xanh lá khi hover tiêu đề (tùy chọn) */
+}
+
 /* PRESS & CONTACT HOTLINE SECTION */
 /* Styling cho Section Báo Chí & Hotline */
 .press-title {
