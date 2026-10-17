@@ -1,71 +1,89 @@
-/* ==========================================
-   JAVASCRIPT CHO TRANG LIÊN HỆ - NÔNG SẢN DŨNG HÀ
-   ========================================== */
-
-$(document).ready(function() {
-    $('#contactForm').on('submit', function(e) {
-        e.preventDefault();
-        let isValid = true;
-
-        // Kiểm tra tên không để trống
-        let name = $('#name').val().trim();
-        if (name === '') {
-            $('#name').addClass('is-invalid');
-            isValid = false;
-        } else {
-            $('#name').removeClass('is-invalid').addClass('is-valid');
-        }
-
-        // Kiểm tra định dạng số điện thoại (10-11 số)
-        let phone = $('#phone').val().trim();
-        let phoneRegex = /^[0-9]{10,11}$/;
-        if (!phoneRegex.test(phone)) {
-            $('#phone').addClass('is-invalid');
-            isValid = false;
-        } else {
-            $('#phone').removeClass('is-invalid').addClass('is-valid');
-        }
-
-        // Kiểm tra định dạng Email
-        let email = $('#email').val().trim();
-        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            $('#email').addClass('is-invalid');
-            isValid = false;
-        } else {
-            $('#email').removeClass('is-invalid').addClass('is-valid');
-        }
-
-        // Kiểm tra mật khẩu (nếu có nhập) tối thiểu 6-8 ký tự
-        let password = $('#password').val();
-        if (password !== '' && (password.length < 6 || password.length > 8)) {
-            $('#password').addClass('is-invalid');
-            isValid = false;
-        } else {
-            $('#password').removeClass('is-invalid');
-            if(password !== '') $('#password').addClass('is-valid');
-        }
-
-        // Kiểm tra nội dung tin nhắn
-        let message = $('#message').val().trim();
-        if (message === '') {
-            $('#message').addClass('is-invalid');
-            isValid = false;
-        } else {
-            $('#message').removeClass('is-invalid').addClass('is-valid');
-        }
-
-        // Nếu hợp lệ toàn bộ
-        if (isValid) {
-            $('#formAlert').removeClass('d-none').hide().fadeIn(400);
-            $('#contactForm')[0].reset();
-            $('.form-control').removeClass('is-valid');
+document.addEventListener('DOMContentLoaded', function () {
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
             
-            // Lưu mảng thông tin liên hệ tạm vào localStorage
-            let feedbackData = { name, phone, email, message, time: new Date().toLocaleString() };
-            let feedbackList = JSON.parse(localStorage.getItem('feedbackList')) || [];
-            feedbackList.push(feedbackData);
-            localStorage.setItem('feedbackList', JSON.stringify(feedbackList));
-        }
-    });
+            // Lấy giá trị từ các trường input
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            // Các phần tử thông báo lỗi và thành công
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const phoneError = document.getElementById('phoneError');
+            const messageError = document.getElementById('messageError');
+            const formSuccess = document.getElementById('formSuccess');
+            
+            // Reset thông báo lỗi
+            nameError.textContent = '';
+            emailError.textContent = '';
+            phoneError.textContent = '';
+            messageError.textContent = '';
+            formSuccess.style.display = 'none';
+            
+            let isValid = true;
+            
+            // Kiểm tra Họ tên
+            if (name === '') {
+                nameError.textContent = 'Vui lòng nhập họ và tên của bạn.';
+                isValid = false;
+            }
+            
+            // Kiểm tra Email
+            if (email === '') {
+                emailError.textContent = 'Vui lòng nhập địa chỉ email.';
+                isValid = false;
+            } else {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    emailError.textContent = 'Địa chỉ email không hợp lệ.';
+                    isValid = false;
+                }
+            }
+            
+            // Kiểm tra Số điện thoại
+            if (phone === '') {
+                phoneError.textContent = 'Vui lòng nhập số điện thoại.';
+                isValid = false;
+            } else {
+                const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+                if (!phoneRegex.test(phone)) {
+                    phoneError.textContent = 'Số điện thoại không hợp lệ (định dạng 10 số tại Việt Nam).';
+                    isValid = false;
+                }
+            }
+            
+            // Kiểm tra Nội dung
+            if (message === '') {
+                messageError.textContent = 'Vui lòng nhập nội dung tin nhắn.';
+                isValid = false;
+            } else if (message.length < 10) {
+                messageError.textContent = 'Nội dung tin nhắn phải có ít nhất 10 ký tự.';
+                isValid = false;
+            }
+            
+            // Nếu hợp lệ, xử lý gửi form giả lập
+            if (isValid) {
+                const submitBtn = contactForm.querySelector('.submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Đang gửi...';
+                
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Gửi thông tin';
+                    formSuccess.style.display = 'block';
+                    contactForm.reset();
+                    
+                    // Tự động ẩn thông báo thành công sau 5 giây
+                    setTimeout(() => {
+                        formSuccess.style.display = 'none';
+                    }, 5000);
+                }, 1000);
+            }
+        });
+    }
 });
