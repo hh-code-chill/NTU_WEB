@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
 function renderCheckoutSummary() {
   const container = document.getElementById("checkoutOrderItems");
   const subtotalEl = document.getElementById("checkoutSubtotal");
+  const disshipEl = document.getElementById("checkoutShip");
+  const discountEl = document.getElementById("checkoutDiscount");
+  const discountLabelEl = document.getElementById("checkoutDiscountLabel");
   const grandTotalEl = document.getElementById("checkoutGrandTotal");
 
   if (!container) return;
@@ -24,6 +27,8 @@ function renderCheckoutSummary() {
       </div>
     `;
     if (subtotalEl) subtotalEl.textContent = "0 đ";
+    if (discountEl) discountEl.textContent = "-0đ";
+    if (disshipEl) disshipEl.textContent = "0đ";
     if (grandTotalEl) grandTotalEl.textContent = "0 đ";
     return;
   }
@@ -61,8 +66,50 @@ function renderCheckoutSummary() {
     typeof formatCurrency === "function"
       ? formatCurrency(subtotal)
       : subtotal.toLocaleString("vi-VN") + "đ";
+
+  const couponCode = localStorage.getItem("freshfarm_applied_coupon");
+  const coupon =
+    typeof VALID_COUPONS !== "undefined" && couponCode
+      ? VALID_COUPONS[couponCode]
+      : null;
+  let discount = 0;
+  if (coupon) {
+    discount =
+      coupon.type === "percent" ? subtotal * coupon.value : coupon.value;
+    discount = Math.min(discount, subtotal);
+  }
+
+  const shippingFee =
+    subtotal > 0 && subtotal < FREESHIP_THRESHOLD ? DEFAULT_SHIPPING_FEE : 0;
+
   if (subtotalEl) subtotalEl.textContent = formattedSubtotal;
-  if (grandTotalEl) grandTotalEl.textContent = formattedSubtotal;
+  if (discountEl) {
+    const formattedDiscount =
+      typeof formatCurrency === "function"
+        ? formatCurrency(discount)
+        : discount.toLocaleString("vi-VN") + "đ";
+    discountEl.textContent = `-${formattedDiscount}`;
+  }
+  if (discountLabelEl) {
+    discountLabelEl.textContent = coupon
+      ? `Giảm giá (${couponCode})`
+      : "Giảm giá";
+  }
+  if (disshipEl) {
+    disshipEl.textContent =
+      shippingFee === 0
+        ? "Miễn phí"
+        : typeof formatCurrency === "function"
+          ? formatCurrency(shippingFee)
+          : shippingFee.toLocaleString("vi-VN") + "đ";
+  }
+  if (grandTotalEl) {
+    const total = Math.max(0, subtotal - discount + shippingFee);
+    grandTotalEl.textContent =
+      typeof formatCurrency === "function"
+        ? formatCurrency(total)
+        : total.toLocaleString("vi-VN") + "đ";
+  }
 }
 
 // 2. XỬ LÝ ẨN/HIỆN LOGO NGÂN HÀNG THEO PHƯƠNG THỨC THANH TOÁN
