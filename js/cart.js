@@ -21,7 +21,7 @@ function formatCurrency(amount) {
 function updateCartBadge() {
   const cart = getCart();
   const totalCount = cart.reduce((total, item) => total + item.quantity, 0);
-  const badges = document.querySelectorAll(".cart-count-badge");
+  const badges = document.querySelectorAll(".cart-count, .cart-count-badge");
   badges.forEach((badge) => {
     badge.textContent = totalCount;
   });
@@ -210,6 +210,33 @@ function calculateCartSummary(cart) {
   document.getElementById("sumTotal").textContent = formatCurrency(grandTotal);
 }
 
+function applyCoupon() {
+  const couponInput = document.getElementById("couponCode");
+  const couponMessage = document.getElementById("couponMessage");
+  if (!couponInput || !couponMessage) return;
+
+  const code = couponInput.value.trim().toUpperCase();
+  couponInput.value = code;
+
+  if (!code) {
+    couponMessage.textContent = "Vui lòng nhập mã giảm giá.";
+    couponMessage.className = "small mt-1 text-danger";
+    return;
+  }
+
+  const coupon = VALID_COUPONS[code];
+  if (!coupon) {
+    couponMessage.textContent = "Mã giảm giá không hợp lệ.";
+    couponMessage.className = "small mt-1 text-danger";
+    return;
+  }
+
+  localStorage.setItem(COUPON_STORAGE_KEY, code);
+  couponMessage.textContent = `Đã áp dụng mã ${code} (${coupon.label}).`;
+  couponMessage.className = "small mt-1 text-success";
+  calculateCartSummary(getCart());
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   updateCartBadge();
   if (document.getElementById("cartBody")) {
@@ -217,5 +244,23 @@ document.addEventListener("DOMContentLoaded", () => {
     document
       .getElementById("btnClearCart")
       ?.addEventListener("click", clearAllCart);
+
+    document
+      .getElementById("btnCoupon")
+      ?.addEventListener("click", applyCoupon);
+    document
+      .getElementById("couponCode")
+      ?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") applyCoupon();
+      });
+
+    const appliedCouponCode = localStorage.getItem(COUPON_STORAGE_KEY);
+    const appliedCoupon = appliedCouponCode && VALID_COUPONS[appliedCouponCode];
+    if (appliedCoupon) {
+      document.getElementById("couponCode").value = appliedCouponCode;
+      const couponMessage = document.getElementById("couponMessage");
+      couponMessage.textContent = `Đã áp dụng mã ${appliedCouponCode} (${appliedCoupon.label}).`;
+      couponMessage.className = "small mt-1 text-success";
+    }
   }
 });

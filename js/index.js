@@ -33,12 +33,6 @@ $(document).ready(function () {
       $categoryDropdown.removeClass("d-none").addClass("d-block");
     }
   });
-
-  // Hàm cập nhật số lượng trên icon giỏ hàng
-  function updateCartBadge() {
-    let count = parseInt(localStorage.getItem("freshfarm_cart_count")) || 0;
-    $(".cart-count").text(count);
-  }
 });
 
 // SUPER SALE SECTION
