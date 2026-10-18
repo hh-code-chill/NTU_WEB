@@ -650,12 +650,13 @@
             </div>
 
             <!-- Add To Cart Button -->
-            <a
-              href="cart.html"
+            <button
+              type="button"
+              id="btnAddToCart"
               class="btn btn-success text-success-dark fw-bold px-4 py-2 rounded-pill btn-action-add"
             >
-              Thêm vào giỏ hàng
-            </a>
+              <i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ hàng
+            </button>
           </div>
 
           <div class="d-flex gap-3 mt-3">
@@ -673,7 +674,7 @@
         </div>
       </div>
 
-      <!-- Main Content Grid (Description + Sidebar) -->
+      <!-- Main Content Grid (Description + Sidebar) Mô tả-->
       <div class="row g-4">
         <!-- Left Main Content Column -->
         <div class="col-lg-8">
@@ -1041,18 +1042,30 @@
 
           <!-- Zalo Group Banner -->
           <div class="card border-0 shadow-sm mb-4">
-            <div
-              class="border-top border-3 border-success p-3 bg-white text-center"
-            >
+            <div class="border-top border-3 border-success p-3 bg-white">
               <h6 class="fw-bold text-uppercase mb-2">
                 THAM GIA NHÓM ZALO CẬP NHẬT GIÁ SỈ HÀNG NGÀY
               </h6>
-              <div class="p-2 border rounded bg-light mt-2">
-                <i class="fas fa-qrcode fa-4x text-success my-2"></i>
-                <p class="small text-muted mb-0">
-                  Quét mã QR để tham gia nhóm Zalo Nông Sản Dũng Hà
-                </p>
-              </div>
+              <!-- Vạch kẻ màu xanh ngắn bên dưới tiêu đề -->
+              <div class="widget-title-line mb-3"></div>
+
+              <p class="small text-muted mb-3">
+                Hãy theo dõi ZALO DŨNG HÀ để nhận mã khuyến mại hàng tuần
+              </p>
+
+              <!-- Banner YouTube bọc liên kết -->
+              <a
+                href="https://oa.zalo.me/1731224869753438724"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="d-block youtube-widget-link"
+              >
+                <img
+                  src="./image/qr-code-zalo.jpg"
+                  alt="Nông Sản Dũng Hà trên YouTube"
+                  class="img-fluid w-100"
+                />
+              </a>
             </div>
           </div>
 
@@ -1062,14 +1075,27 @@
               <h6 class="fw-bold text-uppercase mb-2">
                 NÔNG SẢN DŨNG HÀ TRÊN YOUTUBE
               </h6>
+              <!-- Vạch kẻ màu xanh ngắn bên dưới tiêu đề -->
+              <div class="widget-title-line mb-3"></div>
+
               <p class="small text-muted mb-3">
                 Hãy đăng ký kênh YOUTUBE NÔNG SẢN DŨNG HÀ để theo dõi Video đánh
                 giá sản phẩm
               </p>
-              <div class="text-center p-3 border rounded bg-light">
-                <i class="fab fa-youtube text-danger display-4"></i>
-                <p class="fw-bold mb-0 mt-2">Kênh Nông sản Dũng Hà</p>
-              </div>
+
+              <!-- Banner YouTube bọc liên kết -->
+              <a
+                href="https://www.youtube.com/@nongsandungha8142"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="d-block youtube-widget-link"
+              >
+                <img
+                  src="./image/banner-youtube-nong-san-dung-ha.png"
+                  alt="Nông Sản Dũng Hà trên YouTube"
+                  class="img-fluid w-100"
+                />
+              </a>
             </div>
           </div>
 
@@ -1244,6 +1270,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- Data & Custom JS -->
     <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
     <script src="js/detail.js"></script>
   </body>
 </html>

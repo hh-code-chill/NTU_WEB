@@ -1,191 +1,221 @@
-/* ==========================================
-   JAVASCRIPT GIỎ HÀNG - FRESHFARM
-   Dùng chung cho cart.html, checkout.html và các trang khác.
-   Hoàng gọi addToCart() ở trang chi tiết sản phẩm.
-   ========================================== */
+/* ==========================================================================
+   1. QUẢN LÝ GIỎ HÀNG DÙNG CHUNG (GLOBAL CART LOGIC)
+   ========================================================================== */
+const CART_STORAGE_KEY = "freshfarm_cart";
+const COUPON_STORAGE_KEY = "freshfarm_applied_coupon";
 
-const CART_KEY = 'freshfarm_cart';
-const COUPON_KEY = 'freshfarm_coupon';
-const FREE_SHIP_FROM = 300000;  // Miễn phí giao hàng từ 300.000đ
-const SHIP_FEE = 30000;
-
-// Danh sách mã giảm giá hợp lệ
-const COUPONS = {
-    FRESH10: { type: 'percent', value: 10, text: 'Giảm 10%' },
-    FARM50: { type: 'amount', value: 50000, text: 'Giảm 50.000đ' }
-};
-
-// Định dạng tiền Việt Nam
-function formatMoney(number) {
-    return Number(number).toLocaleString('vi-VN') + 'đ';
-}
-
-// Đọc / lưu giỏ hàng từ localStorage
 function getCart() {
-    try {
-        return JSON.parse(localStorage.getItem(CART_KEY)) || [];
-    } catch (error) {
-        return [];
-    }
+  const cartData = localStorage.getItem(CART_STORAGE_KEY);
+  return cartData ? JSON.parse(cartData) : [];
 }
 
 function saveCart(cart) {
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    updateCartBadge();
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  updateCartBadge();
 }
 
-// Cập nhật số lượng hiển thị trên biểu tượng giỏ hàng ở Navbar
+function formatCurrency(amount) {
+  return new Intl.NumberFormat("vi-VN").format(amount) + "đ";
+}
+
 function updateCartBadge() {
-    let total = getCart().reduce(function (sum, item) {
-        return sum + item.qty;
-    }, 0);
-    $('.cart-count-badge').text(total);
+  const cart = getCart();
+  const totalCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const badges = document.querySelectorAll(".cart-count-badge");
+  badges.forEach((badge) => {
+    badge.textContent = totalCount;
+  });
 }
 
-/* Thêm sản phẩm vào giỏ.
-   item = { id, name, price, qty, mode, img }
-   mode: 'kg' (mua lẻ theo kg) hoặc 'weekly' (gói hộp định kỳ hàng tuần) */
-function addToCart(item) {
-    let cart = getCart();
-    let found = cart.find(function (p) {
-        return p.id === item.id && p.mode === item.mode;
+// Hàm Thêm vào giỏ hàng (Đã cập nhật tách dòng theo Loại & Giao từ)
+function addToCart(product) {
+  let cart = getCart();
+
+  // Chuẩn hóa dữ liệu đầu vào
+  const variant = product.variant || "Mặc định";
+  const location = product.location || "Hà Nội";
+  const qtyToAdd =
+    parseInt(product.quantity, 10) > 0 ? parseInt(product.quantity, 10) : 1;
+
+  // Tạo ID duy nhất cho mỗi biến thể (ID + Loại + Nơi giao)
+  const cartItemId = `${product.id}_${variant}_${location}`;
+
+  // Tìm xem sản phẩm cùng biến thể này đã có trong giỏ chưa
+  const existingIndex = cart.findIndex(
+    (item) => item.cartItemId === cartItemId,
+  );
+
+  if (existingIndex > -1) {
+    // Nếu trùng cả ID, Loại và Nơi giao -> Cộng dồn số lượng
+    cart[existingIndex].quantity += qtyToAdd;
+  } else {
+    // Nếu khác Loại hoặc khác Nơi giao -> Thêm thành 1 dòng mới riêng biệt
+    cart.push({
+      cartItemId: cartItemId,
+      id: product.id,
+      name: product.name,
+      price: Number(product.price),
+      image: product.image || "image/logo.png",
+      variant: variant,
+      location: location,
+      quantity: qtyToAdd,
     });
-    if (found) {
-        found.qty += item.qty || 1;
-    } else {
-        item.qty = item.qty || 1;
-        cart.push(item);
-    }
+  }
+
+  saveCart(cart);
+
+  if (document.getElementById("cartBody")) {
+    renderCartPage();
+  }
+}
+
+/* ==========================================================================
+   2. XỬ LÝ GIAO DIỆN TRANG GIỎ HÀNG (CART PAGE LOGIC)
+   ========================================================================== */
+const VALID_COUPONS = {
+  FRESH10: { type: "percent", value: 0.1, label: "Giảm 10%" },
+  GIAM30K: { type: "fixed", value: 30000, label: "Giảm 30.000đ" },
+};
+
+const FREESHIP_THRESHOLD = 300000;
+const DEFAULT_SHIPPING_FEE = 30000;
+
+function renderCartPage() {
+  const cartEmpty = document.getElementById("cartEmpty");
+  const cartFilled = document.getElementById("cartFilled");
+  const cartBody = document.getElementById("cartBody");
+
+  if (!cartBody || !cartEmpty || !cartFilled) return;
+
+  const cart = getCart();
+
+  if (cart.length === 0) {
+    cartEmpty.classList.remove("d-none");
+    cartFilled.classList.add("d-none");
+    return;
+  }
+
+  cartEmpty.classList.add("d-none");
+  cartFilled.classList.remove("d-none");
+
+  let htmlContent = "";
+  cart.forEach((item, index) => {
+    const itemTotal = item.price * item.quantity;
+    htmlContent += `
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center gap-3">
+                        <a href="detail.html?id=${item.id}">
+                            <img src="${item.image}" alt="${item.name}" class="cart-item-img" style="width: 65px; height: 65px; object-fit: cover; border-radius: 8px;">
+                        </a>
+                        <div>
+                            <!-- Click vào tên chuyển đến trang detail -->
+                            <a href="detail.html?id=${item.id}" class="text-decoration-none text-dark fw-bold hover-success">
+                                ${item.name}
+                            </a>
+                            <div class="small text-muted mt-1">
+                                <div><i class="bi bi-tag me-1"></i>Phân loại: <strong class="text-dark">${item.variant}</strong></div>
+                                <div><i class="bi bi-geo-alt me-1"></i>Giao từ: <strong class="text-dark">${item.location}</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="fw-semibold">${formatCurrency(item.price)}</td>
+                <td>
+                    <div class="input-group input-group-sm" style="width: 110px;">
+                        <button class="btn btn-outline-secondary" type="button" onclick="changeQuantity(${index}, -1)">-</button>
+                        <input type="number" class="form-control text-center" value="${item.quantity}" min="1" onchange="updateQuantityInput(${index}, this.value)">
+                        <button class="btn btn-outline-secondary" type="button" onclick="changeQuantity(${index}, 1)">+</button>
+                    </div>
+                </td>
+                <td class="fw-bold text-success">${formatCurrency(itemTotal)}</td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-outline-danger border-0" onclick="removeItem(${index})" title="Xóa">
+                        <i class="bi bi-trash fs-5"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+  });
+
+  cartBody.innerHTML = htmlContent;
+  calculateCartSummary(cart);
+}
+
+function changeQuantity(index, delta) {
+  let cart = getCart();
+  if (!cart[index]) return;
+
+  cart[index].quantity += delta;
+  if (cart[index].quantity < 1) cart[index].quantity = 1;
+
+  saveCart(cart);
+  renderCartPage();
+}
+
+function updateQuantityInput(index, value) {
+  let cart = getCart();
+  if (!cart[index]) return;
+
+  let newQty = parseInt(value, 10);
+  if (isNaN(newQty) || newQty < 1) newQty = 1;
+
+  cart[index].quantity = newQty;
+  saveCart(cart);
+  renderCartPage();
+}
+
+function removeItem(index) {
+  let cart = getCart();
+  if (confirm("Bạn có chắc muốn xóa sản phẩm này?")) {
+    cart.splice(index, 1);
     saveCart(cart);
+    renderCartPage();
+  }
 }
 
-// Tính tiền giảm giá theo mã đang áp dụng
-function getDiscount(subtotal) {
-    let coupon = COUPONS[localStorage.getItem(COUPON_KEY)];
-    if (!coupon || subtotal === 0) return 0;
-    if (coupon.type === 'percent') {
-        return Math.round(subtotal * coupon.value / 100);
-    }
-    return Math.min(coupon.value, subtotal);
-}
-
-// Tính tạm tính, giảm giá, phí giao hàng và tổng cộng
-function calcTotals() {
-    let subtotal = getCart().reduce(function (sum, item) {
-        return sum + item.price * item.qty;
-    }, 0);
-    let discount = getDiscount(subtotal);
-    let afterDiscount = subtotal - discount;
-    let shipping = (afterDiscount === 0 || afterDiscount >= FREE_SHIP_FROM) ? 0 : SHIP_FEE;
-    return { subtotal: subtotal, discount: discount, shipping: shipping, total: afterDiscount + shipping };
-}
-
-function renderTotals() {
-    let t = calcTotals();
-    $('#sumSubtotal').text(formatMoney(t.subtotal));
-    $('#sumDiscount').text('-' + formatMoney(t.discount));
-    $('#sumShipping').text(t.shipping ? formatMoney(t.shipping) : 'Miễn phí');
-    $('#sumTotal').text(formatMoney(t.total));
-}
-
-// Vẽ bảng danh sách hàng trong giỏ
-function renderCart() {
-    let cart = getCart();
-    let $body = $('#cartBody').empty();
-    $('#cartEmpty').toggleClass('d-none', cart.length > 0);
-    $('#cartFilled').toggleClass('d-none', cart.length === 0);
-
-    cart.forEach(function (item, index) {
-        let isWeekly = item.mode === 'weekly';
-        let unit = isWeekly ? '/ hộp / tuần' : '/ kg';
-        let tag = isWeekly
-            ? '<span class="badge bg-warning text-dark">Gói hộp hàng tuần</span>'
-            : '<span class="badge bg-success">Mua lẻ theo kg</span>';
-
-        $body.append(
-            '<tr data-index="' + index + '">' +
-                '<td><div class="d-flex align-items-center gap-3">' +
-                    '<img class="cart-img" src="' + (item.img || '') + '" alt="' + item.name + '">' +
-                    '<div><div class="fw-semibold">' + item.name + '</div>' + tag + '</div></div></td>' +
-                '<td class="text-nowrap">' + formatMoney(item.price) + ' <small class="text-muted">' + unit + '</small></td>' +
-                '<td><div class="input-group qty-box">' +
-                    '<button class="btn btn-outline-success btn-minus" type="button">−</button>' +
-                    '<input type="text" class="form-control qty-input" value="' + item.qty + '" aria-label="Số lượng">' +
-                    '<button class="btn btn-outline-success btn-plus" type="button">+</button></div></td>' +
-                '<td class="fw-bold text-nowrap">' + formatMoney(item.price * item.qty) + '</td>' +
-                '<td><button class="btn btn-sm btn-outline-danger btn-delete" title="Xóa"><i class="bi bi-trash"></i></button></td>' +
-            '</tr>'
-        );
-    });
-    renderTotals();
-}
-
-// Đặt số lượng mới cho 1 dòng (tối thiểu 1, tối đa 99)
-function setQuantity(index, qty) {
-    let cart = getCart();
-    if (!cart[index]) return;
-    cart[index].qty = Math.max(1, Math.min(99, qty || 1));
-    saveCart(cart);
-    renderCart();
-}
-
-$(document).ready(function () {
+function clearAllCart() {
+  if (confirm("Bạn có chắc chắn muốn xóa toàn bộ giỏ hàng?")) {
+    localStorage.removeItem(CART_STORAGE_KEY);
+    localStorage.removeItem(COUPON_STORAGE_KEY);
     updateCartBadge();
+    renderCartPage();
+  }
+}
 
-    // Các thao tác dưới đây chỉ chạy ở trang giỏ hàng
-    if ($('#cartBody').length === 0) return;
-    renderCart();
+function calculateCartSummary(cart) {
+  const subtotal = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
+  let discount = 0;
+  const appliedCouponCode = localStorage.getItem(COUPON_STORAGE_KEY);
 
-    // Tăng / giảm / nhập tay số lượng / xóa món
-    $('#cartBody').on('click', '.btn-plus', function () {
-        let index = $(this).closest('tr').data('index');
-        setQuantity(index, getCart()[index].qty + 1);
-    });
-    $('#cartBody').on('click', '.btn-minus', function () {
-        let index = $(this).closest('tr').data('index');
-        setQuantity(index, getCart()[index].qty - 1);
-    });
-    $('#cartBody').on('change', '.qty-input', function () {
-        setQuantity($(this).closest('tr').data('index'), parseInt($(this).val(), 10));
-    });
-    $('#cartBody').on('click', '.btn-delete', function () {
-        let cart = getCart();
-        cart.splice($(this).closest('tr').data('index'), 1);
-        saveCart(cart);
-        renderCart();
-    });
+  if (appliedCouponCode && VALID_COUPONS[appliedCouponCode]) {
+    const coupon = VALID_COUPONS[appliedCouponCode];
+    discount =
+      coupon.type === "percent" ? subtotal * coupon.value : coupon.value;
+    if (discount > subtotal) discount = subtotal;
+  }
 
-    // Xóa toàn bộ giỏ hàng
-    $('#btnClearCart').on('click', function () {
-        if (confirm('Bạn muốn xóa toàn bộ giỏ hàng?')) {
-            saveCart([]);
-            renderCart();
-        }
-    });
+  let shippingFee =
+    subtotal > 0 && subtotal < FREESHIP_THRESHOLD ? DEFAULT_SHIPPING_FEE : 0;
+  const grandTotal = Math.max(0, subtotal - discount + shippingFee);
 
-    // Thêm sản phẩm mẫu để kiểm thử khi chưa ghép trang của Hoàng
-    $('#btnDemo').on('click', function () {
-        addToCart({ id: 'cai-ngot', name: 'Cải ngọt hữu cơ', price: 35000, qty: 2, mode: 'kg', img: 'image/cai_ngot.png' });
-        addToCart({ id: 'hop-rau', name: 'Hộp rau củ tuần (5 loại)', price: 189000, qty: 1, mode: 'weekly', img: 'image/hop_rau.png' });
-        addToCart({ id: 'cam-sanh', name: 'Cam sành sạch', price: 45000, qty: 3, mode: 'kg', img: 'image/cam_sanh.png' });
-        renderCart();
-    });
+  document.getElementById("sumSubtotal").textContent = formatCurrency(subtotal);
+  document.getElementById("sumDiscount").textContent =
+    `-${formatCurrency(discount)}`;
+  document.getElementById("sumShipping").textContent =
+    shippingFee === 0 ? "Miễn phí" : formatCurrency(shippingFee);
+  document.getElementById("sumTotal").textContent = formatCurrency(grandTotal);
+}
 
-    // Áp dụng mã giảm giá
-    $('#btnCoupon').on('click', function () {
-        let code = $('#couponCode').val().trim().toUpperCase();
-        let $message = $('#couponMessage');
-        if (code === '') {
-            $message.attr('class', 'small mt-1 text-danger').text('Vui lòng nhập mã giảm giá.');
-            return;
-        }
-        if (COUPONS[code]) {
-            localStorage.setItem(COUPON_KEY, code);
-            $message.attr('class', 'small mt-1 text-success').text('Đã áp dụng mã ' + code + ': ' + COUPONS[code].text);
-        } else {
-            localStorage.removeItem(COUPON_KEY);
-            $message.attr('class', 'small mt-1 text-danger').text('Mã không hợp lệ. Thử FRESH10 hoặc FARM50.');
-        }
-        renderTotals();
-    });
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartBadge();
+  if (document.getElementById("cartBody")) {
+    renderCartPage();
+    document
+      .getElementById("btnClearCart")
+      ?.addEventListener("click", clearAllCart);
+  }
 });

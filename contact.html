@@ -1,122 +1,167 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Liên hệ - Freshfarm</title>
     <!-- File CSS -->
-    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/contact.css" />
     <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
     <!-- Header trang liên hệ -->
     <header class="contact-header">
-        <div class="container">
-            <h1>Liên hệ với Freshfarm</h1>
-            <p>Chúng tôi luôn lắng nghe và sẵn sàng hỗ trợ bạn mọi lúc về các sản phẩm nông sản sạch!</p>
-        </div>
+      <div class="container">
+        <h1>Liên hệ với Freshfarm</h1>
+        <p>
+          Chúng tôi luôn lắng nghe và sẵn sàng hỗ trợ bạn mọi lúc về các sản
+          phẩm nông sản sạch!
+        </p>
+      </div>
     </header>
 
     <!-- Nội dung chính -->
     <main class="contact-main container">
-        <div class="contact-grid">
-            <!-- Cột 1: Thông tin liên hệ, Hotline, Giờ làm việc -->
-            <div class="contact-info-card">
-                <h2>Thông tin cửa hàng</h2>
-                <p class="intro-text">Freshfarm cam kết mang lại nguồn thực phẩm sạch, an toàn và tươi ngon nhất cho gia đình bạn.</p>
-                
-                <ul class="info-list">
-                    <li>
-                        <i class="fa-solid fa-location-dot"></i>
-                        <div>
-                            <strong>Trụ sở chính:</strong>
-                            <p>Số 123 Đường Nông Sản, Phường Xuân Khánh, Quận Ninh Kiều, TP. Cần Thơ</p>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-phone-volume"></i>
-                        <div>
-                            <strong>Hotline hỗ trợ:</strong>
-                            <p><a href="tel:0866918366">0866.918.366</a> (7:00 - 22:00 hàng ngày)</p>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-envelope"></i>
-                        <div>
-                            <strong>Email liên hệ:</strong>
-                            <p>support@freshfarm.vn</p>
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-clock"></i>
-                        <div>
-                            <strong>Giờ làm việc:</strong>
-                            <p>Thứ Hai - Chủ Nhật: 07:00 - 22:00</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+      <div class="contact-grid">
+        <!-- Cột 1: Thông tin liên hệ, Hotline, Giờ làm việc -->
+        <div class="contact-info-card">
+          <h2>Thông tin cửa hàng</h2>
+          <p class="intro-text">
+            Freshfarm cam kết mang lại nguồn thực phẩm sạch, an toàn và tươi
+            ngon nhất cho gia đình bạn.
+          </p>
 
-            <!-- Cột 2: Form gửi phản hồi / tin nhắn -->
-            <div class="contact-form-card">
-                <h2>Gửi phản hồi / Tin nhắn</h2>
-                <form id="contactForm" class="contact-form" novalidate>
-                    <div class="form-group">
-                        <label for="name">Họ và tên <span class="required">*</span></label>
-                        <input type="text" id="name" name="name" placeholder="Nhập họ và tên của bạn...">
-                        <span class="error-message" id="nameError"></span>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">Email <span class="required">*</span></label>
-                            <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email...">
-                            <span class="error-message" id="emailError"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Số điện thoại <span class="required">*</span></label>
-                            <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại...">
-                            <span class="error-message" id="phoneError"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message">Nội dung tin nhắn <span class="required">*</span></label>
-                        <textarea id="message" name="message" rows="5" placeholder="Nhập nội dung phản hồi hoặc thắc mắc của bạn..."></textarea>
-                        <span class="error-message" id="messageError"></span>
-                    </div>
-
-                    <button type="submit" class="submit-btn">Gửi thông tin</button>
-                    <div id="formSuccess" class="success-message" style="display: none;">Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất.</div>
-                </form>
-            </div>
+          <ul class="info-list">
+            <li>
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <strong>Trụ sở chính:</strong>
+                <p>
+                  Số 123 Đường Nông Sản, Phường Xuân Khánh, Quận Ninh Kiều, TP.
+                  Cần Thơ
+                </p>
+              </div>
+            </li>
+            <li>
+              <i class="fa-solid fa-phone-volume"></i>
+              <div>
+                <strong>Hotline hỗ trợ:</strong>
+                <p>
+                  <a href="tel:0866918366">0866.918.366</a> (7:00 - 22:00 hàng
+                  ngày)
+                </p>
+              </div>
+            </li>
+            <li>
+              <i class="fa-solid fa-envelope"></i>
+              <div>
+                <strong>Email liên hệ:</strong>
+                <p>support@freshfarm.vn</p>
+              </div>
+            </li>
+            <li>
+              <i class="fa-solid fa-clock"></i>
+              <div>
+                <strong>Giờ làm việc:</strong>
+                <p>Thứ Hai - Chủ Nhật: 07:00 - 22:00</p>
+              </div>
+            </li>
+          </ul>
         </div>
 
-        <!-- Phần bản đồ Google Maps nhúng (Iframe) -->
-        <div class="map-section">
-            <h2>Bản đồ đường đi</h2>
-            <div class="map-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.841518408545!2d105.76840457479573!3d10.029933690077024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0629f6de3edb7%3A0x52778816bc2e3b5e!2zTOG6p24gTOG6p3UgQ8awIEThuqljLCBOaW5oIEtp4buBdSwgQ-G6p24gVGjGoSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1680000000000!5m2!1svi!2s" 
-                    width="100%" 
-                    height="450" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade"
-                    title="Bản đồ Freshfarm">
-                </iframe>
+        <!-- Cột 2: Form gửi phản hồi / tin nhắn -->
+        <div class="contact-form-card">
+          <h2>Gửi phản hồi / Tin nhắn</h2>
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="form-group">
+              <label for="name"
+                >Họ và tên <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Nhập họ và tên của bạn..."
+              />
+              <span class="error-message" id="nameError"></span>
             </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Nhập địa chỉ email..."
+                />
+                <span class="error-message" id="emailError"></span>
+              </div>
+              <div class="form-group">
+                <label for="phone"
+                  >Số điện thoại <span class="required">*</span></label
+                >
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="Nhập số điện thoại..."
+                />
+                <span class="error-message" id="phoneError"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message"
+                >Nội dung tin nhắn <span class="required">*</span></label
+              >
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                placeholder="Nhập nội dung phản hồi hoặc thắc mắc của bạn..."
+              ></textarea>
+              <span class="error-message" id="messageError"></span>
+            </div>
+
+            <button type="submit" class="submit-btn">Gửi thông tin</button>
+            <div id="formSuccess" class="success-message" style="display: none">
+              Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất.
+            </div>
+          </form>
         </div>
+      </div>
+
+      <!-- Phần bản đồ Google Maps nhúng (Iframe) -->
+      <div class="map-section">
+        <h2>Bản đồ đường đi</h2>
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.841518408545!2d105.76840457479573!3d10.029933690077024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0629f6de3edb7%3A0x52778816bc2e3b5e!2zTOG6p24gTOG6p3UgQ8awIEThuqljLCBOaW5oIEtp4buBdSwgQ-G6p24gVGjGoSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1680000000000!5m2!1svi!2s"
+            width="100%"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Bản đồ Freshfarm"
+          >
+          </iframe>
+        </div>
+      </div>
     </main>
 
     <!-- Footer -->
     <footer class="contact-footer">
-        <p>&copy; 2026 Freshfarm. Tất cả các quyền được bảo lưu.</p>
+      <p>&copy; 2026 Freshfarm. Tất cả các quyền được bảo lưu.</p>
     </footer>
 
     <!-- File JavaScript -->
     <script src="js/contact.js"></script>
-</body>
+    <script src="js/cart.js"></script>
+  </body>
 </html>

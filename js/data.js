@@ -1,5 +1,5 @@
 // Danh sách dữ liệu sản phẩm mẫu (Mock Data)
-const productsData = [
+window.productsData = [
   // --- 7 Sản phẩm gốc ---
   {
     id: 1,
@@ -13,7 +13,7 @@ const productsData = [
     priceRange: "100-200", // Từ 100k - 200k
     image: "./image/san_pham_1.jpg",
     isNew: true,
-    salesCount: 150
+    salesCount: 150,
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const productsData = [
     priceRange: "under-100", // Dưới 100k
     image: "./image/san_pham_2.jpg",
     isNew: false,
-    salesCount: 320
+    salesCount: 320,
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const productsData = [
     priceRange: "under-100",
     image: "./image/san_pham_3.jpg",
     isNew: true,
-    salesCount: 85
+    salesCount: 85,
   },
   {
     id: 4,
@@ -55,7 +55,7 @@ const productsData = [
     priceRange: "under-100",
     image: "./image/san_pham_4.jpg",
     isNew: false,
-    salesCount: 410
+    salesCount: 410,
   },
   {
     id: 5,
@@ -69,7 +69,7 @@ const productsData = [
     priceRange: "under-100",
     image: "./image/san_pham_5.jpg",
     isNew: true,
-    salesCount: 200
+    salesCount: 200,
   },
   {
     id: 6,
@@ -83,7 +83,7 @@ const productsData = [
     priceRange: "under-100",
     image: "./image/san_pham_6.jpg",
     isNew: false,
-    salesCount: 95
+    salesCount: 95,
   },
   {
     id: 7,
@@ -97,7 +97,7 @@ const productsData = [
     priceRange: "under-100",
     image: "./image/san_pham_7.jpg",
     isNew: false,
-    salesCount: 530
+    salesCount: 530,
   },
 
   // --- Nhân bản & biến tấu thêm 9 sản phẩm để đạt 16 sản phẩm test phân trang ---
@@ -113,7 +113,7 @@ const productsData = [
     priceRange: "200-500", // 200k - 500k
     image: "./image/san_pham_1.jpg",
     isNew: true,
-    salesCount: 45
+    salesCount: 45,
   },
   {
     id: 9,
@@ -127,7 +127,7 @@ const productsData = [
     priceRange: "under-100",
     image: "./image/san_pham_2.jpg",
     isNew: false,
-    salesCount: 110
+    salesCount: 110,
   },
   {
     id: 10,
@@ -141,7 +141,7 @@ const productsData = [
     priceRange: "100-200",
     image: "./image/san_pham_3.jpg",
     isNew: true,
-    salesCount: 78
+    salesCount: 78,
   },
   {
     id: 11,
@@ -155,7 +155,7 @@ const productsData = [
     priceRange: "under-100",
     image: "./image/san_pham_4.jpg",
     isNew: false,
-    salesCount: 230
+    salesCount: 230,
   },
   {
     id: 12,
@@ -169,7 +169,7 @@ const productsData = [
     priceRange: "above-500", // Trên 500k
     image: "./image/san_pham_5.jpg",
     isNew: true,
-    salesCount: 62
+    salesCount: 62,
   },
   {
     id: 13,
@@ -183,7 +183,7 @@ const productsData = [
     priceRange: "100-200",
     image: "./image/san_pham_6.jpg",
     isNew: false,
-    salesCount: 180
+    salesCount: 180,
   },
   {
     id: 14,
@@ -197,7 +197,7 @@ const productsData = [
     priceRange: "under-100",
     image: "./image/san_pham_7.jpg",
     isNew: true,
-    salesCount: 290
+    salesCount: 290,
   },
   {
     id: 15,
@@ -211,7 +211,7 @@ const productsData = [
     priceRange: "above-500",
     image: "./image/san_pham_1.jpg",
     isNew: true,
-    salesCount: 35
+    salesCount: 35,
   },
   {
     id: 16,
@@ -225,6 +225,6 @@ const productsData = [
     priceRange: "200-500",
     image: "./image/san_pham_2.jpg",
     isNew: false,
-    salesCount: 140
-  }
+    salesCount: 140,
+  },
 ];

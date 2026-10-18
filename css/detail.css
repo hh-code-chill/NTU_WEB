@@ -1,59 +1,74 @@
 /* Tùy chỉnh riêng cho trang Chi tiết sản phẩm */
 .section-header-green {
-    background-color: #4cae4c;
-    color: #ffffff;
-    padding: 10px 15px;
-    border-radius: 4px 4px 0 0;
+  background-color: #4cae4c;
+  color: #ffffff;
+  padding: 10px 15px;
+  border-radius: 4px 4px 0 0;
 }
 
 /* Biến thể & Tùy chọn giao hàng */
 .location-option.active,
 .variant-option.active {
-    border-color: #198754 !important;
-    background-color: #e8f5e9 !important;
-    color: #198754 !important;
-    font-weight: bold;
+  border-color: #198754 !important;
+  background-color: #e8f5e9 !important;
+  color: #198754 !important;
+  font-weight: bold;
 }
 
 /* Nút Thêm vào giỏ hàng */
 .btn-success-light {
-    background-color: #a3d19f;
-    color: #ffffff;
-    border: none;
-    transition: background-color 0.2s ease;
+  background-color: #a3d19f;
+  color: #ffffff;
+  border: none;
+  transition: background-color 0.2s ease;
 }
 
 .btn-success-light:hover {
-    background-color: #198754;
-    color: #ffffff;
+  background-color: #198754;
+  color: #ffffff;
 }
 
 /* Thumbnail ảnh nhỏ */
 .product-thumb {
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  opacity: 0.7;
+  transition:
+    opacity 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .product-thumb:hover,
 .product-thumb.active {
-    opacity: 1;
-    border-color: #198754 !important;
+  opacity: 1;
+  border-color: #198754 !important;
 }
 
 /* Khung Mục Lục */
 .toc-box {
-    border: 1px solid #e0e0e0;
+  border: 1px solid #e0e0e0;
 }
 
 .toc-title {
-    background-color: #f8f9fa;
+  background-color: #f8f9fa;
 }
 
 .toc-list li {
-    margin-bottom: 4px;
+  margin-bottom: 4px;
 }
 
 .text-justify {
-    text-align: justify;
+  text-align: justify;
+}
+
+/* Banner youtube */
+/* Vạch kẻ màu xanh ngắn bên dưới tiêu đề Widget */
+.widget-title-line {
+  width: 35px;
+  height: 3px;
+  background-color: #198754;
+}
+
+/* Link YouTube: chỉ hiển thị con trỏ tay khi rê chuột */
+.youtube-widget-link {
+  cursor: pointer;
 }
