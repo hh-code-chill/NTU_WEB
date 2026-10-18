@@ -11,14 +11,487 @@
     />
     <link
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
     />
     <!-- Custom CSS riêng cho Checkout -->
     <link rel="stylesheet" href="css/checkout.css" />
   </head>
   <body>
-    <!-- Header (Chờ copy từ index.html) -->
-    <header></header>
+    <!-- Top Notification Bar -->
+    <div class="bg-primary-green text-white text-center py-1 small fw-bold">
+      Freeship COD Đơn 199k Và Giảm 10% Tổng Hóa Đơn
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="bg-white sticky-top shadow-sm">
+      <!-- Tầng 1: Logo, Tìm kiếm, User/Cart -->
+      <div class="container py-3">
+        <div class="row align-items-center">
+          <!-- Logo -->
+          <div class="col-md-3 col-12 mb-3 mb-md-0 text-center text-md-start">
+            <a
+              class="navbar-brand fw-bold fs-3 text-primary-green d-flex align-items-center justify-content-center justify-content-md-start"
+              href="index.html"
+            >
+              <i class="fa-solid fa-leaf me-2"></i> FreshFarm
+            </a>
+            <div class="small text-muted fst-italic">
+              Bring nature to your home
+            </div>
+          </div>
+
+          <!-- Thanh tìm kiếm -->
+          <div class="col-md-5 col-12 mb-3 mb-md-0">
+            <form class="d-flex position-relative">
+              <input
+                class="form-control rounded-pill pe-5 search-input"
+                type="search"
+                placeholder="Tìm kiếm..."
+                aria-label="Search"
+              />
+              <button
+                class="btn position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent text-dark"
+                type="submit"
+              >
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Liên hệ & Giỏ hàng -->
+          <div
+            class="col-md-4 col-12 d-flex justify-content-center justify-content-md-end align-items-center gap-3"
+          >
+            <div
+              class="contact-box border rounded-pill px-3 py-1 text-primary-green fw-bold d-none d-lg-block"
+            >
+              <a
+                href="tel:0866918366"
+                class="fw-bold text-decoration-none text-primary-green dept-phone"
+                >Hotline: 0866.918.366</a
+              >
+            </div>
+            <a
+              href="login.html"
+              class="btn btn-primary-green text-white rounded-circle icon-btn"
+              ><i class="fa-solid fa-user"></i
+            ></a>
+            <a
+              href="cart.html"
+              class="btn btn-primary-green text-white rounded-circle icon-btn position-relative"
+            >
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-count"
+                >0</span
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tầng 2: Menu Chuyên mục & Menu chính -->
+      <div class="border-top">
+        <div class="container">
+          <div class="row align-items-center">
+            <!-- Cột Chuyên mục (Sidebar menu trigger) -->
+            <div class="col-lg-3 col-md-4 position-relative z-index-dropdown">
+              <div
+                class="bg-primary-green text-white py-2 px-3 fw-bold cursor-pointer d-flex justify-content-between align-items-center"
+                id="categoryMenuToggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <span><i class="fa-solid fa-bars me-2"></i> Chuyên mục</span>
+                <i class="fa-solid fa-chevron-down small"></i>
+              </div>
+
+              <!-- Dropdown Menu Chuyên mục -->
+              <div
+                class="category-dropdown dropdown-menu bg-white border shadow-sm position-absolute w-100 start-0 m-0"
+                id="categoryDropdown"
+              >
+                <ul class="list-unstyled mb-0">
+                  <li class="category-item border-bottom position-relative">
+                    <a
+                      href="#"
+                      class="d-flex justify-content-between align-items-center px-3 py-2 text-dark text-decoration-none"
+                    >
+                      Rau Củ Quả
+                      <i class="fa-solid fa-chevron-right small text-muted"></i>
+                    </a>
+                  </li>
+                  <li
+                    class="category-item border-bottom position-relative has-submenu"
+                  >
+                    <a
+                      href="#"
+                      class="d-flex justify-content-between align-items-center px-3 py-2 text-dark text-decoration-none"
+                    >
+                      Đồ Khô
+                      <i class="fa-solid fa-chevron-right small text-muted"></i>
+                    </a>
+                    <!-- Menu con (Submenu) -->
+                    <div
+                      class="submenu position-absolute start-100 top-0 bg-white border shadow-sm w-100 d-none"
+                    >
+                      <ul class="list-unstyled mb-0">
+                        <li>
+                          <a
+                            href="#"
+                            class="d-block px-3 py-2 text-dark text-decoration-none border-bottom"
+                            >Thực Phẩm Khô</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="d-block px-3 py-2 text-dark text-decoration-none border-bottom"
+                            >Gia Vị</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="d-block px-3 py-2 text-dark text-decoration-none border-bottom"
+                            >Bột Nông Sản</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="d-block px-3 py-2 text-dark text-decoration-none border-bottom"
+                            >Gạo</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="d-block px-3 py-2 text-dark text-decoration-none border-bottom"
+                            >Hạt Dinh Dưỡng</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="d-block px-3 py-2 text-dark text-decoration-none"
+                            >Bánh Kẹo</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li class="category-item border-bottom position-relative">
+                    <a
+                      href="#"
+                      class="d-flex justify-content-between align-items-center px-3 py-2 text-dark text-decoration-none"
+                    >
+                      Sản Phẩm Tươi Sống
+                      <i class="fa-solid fa-chevron-right small text-muted"></i>
+                    </a>
+                  </li>
+                  <li class="category-item border-bottom position-relative">
+                    <a
+                      href="#"
+                      class="d-flex justify-content-between align-items-center px-3 py-2 text-dark text-decoration-none"
+                    >
+                      Dược Liệu
+                      <i class="fa-solid fa-chevron-right small text-muted"></i>
+                    </a>
+                  </li>
+                  <li class="category-item border-bottom position-relative">
+                    <a
+                      href="#"
+                      class="d-flex justify-content-between align-items-center px-3 py-2 text-dark text-decoration-none"
+                    >
+                      Hạt Giống
+                      <i class="fa-solid fa-chevron-right small text-muted"></i>
+                    </a>
+                  </li>
+                  <li class="category-item border-bottom position-relative">
+                    <a
+                      href="#"
+                      class="d-flex justify-content-between align-items-center px-3 py-2 text-dark text-decoration-none"
+                    >
+                      Thực Phẩm Đóng Gói - Chế Biến
+                      <i class="fa-solid fa-chevron-right small text-muted"></i>
+                    </a>
+                  </li>
+                  <li class="category-item position-relative">
+                    <a
+                      href="#"
+                      class="d-block px-3 py-2 text-danger text-decoration-none fw-bold"
+                    >
+                      Super Sale
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Cột Menu ngang -->
+            <div class="col-lg-9 col-md-8">
+              <nav class="navbar navbar-expand-lg navbar-light py-0">
+                <button
+                  class="navbar-toggler d-lg-none ms-auto mb-2"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#mainMenuNav"
+                >
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainMenuNav">
+                  <ul
+                    class="navbar-nav w-100 justify-content-between fw-bold text-uppercase small"
+                  >
+                    <li class="nav-item">
+                      <a class="nav-link text-primary-green" href="index.html"
+                        >Trang Chủ</a
+                      >
+                    </li>
+
+                    <!-- Dropdown Giới Thiệu -->
+                    <li class="nav-item dropdown">
+                      <a
+                        class="nav-link dropdown-toggle text-dark"
+                        href="about.html"
+                        id="aboutDropdown"
+                        role="button"
+                        aria-expanded="false"
+                        >Giới Thiệu</a
+                      >
+                      <ul
+                        class="dropdown-menu shadow-sm border-0"
+                        aria-labelledby="aboutDropdown"
+                      >
+                        <li>
+                          <a
+                            class="dropdown-item fw-normal text-capitalize"
+                            href="#"
+                            >Hồ Sơ Năng Lực</a
+                          >
+                        </li>
+                      </ul>
+                    </li>
+
+                    <!-- Dropdown Danh Mục (Mega Menu) -->
+                    <li class="nav-item dropdown position-static">
+                      <a
+                        class="nav-link dropdown-toggle text-dark"
+                        href="shop.html"
+                        id="categoryDropdownLink"
+                        role="button"
+                        aria-expanded="false"
+                        >Danh Mục</a
+                      >
+                      <div
+                        class="dropdown-menu w-100 mt-0 shadow-sm border-0 p-4"
+                        aria-labelledby="categoryDropdownLink"
+                      >
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <h6
+                                class="fw-bold text-dark text-capitalize mb-3"
+                              >
+                                Đồ khô
+                              </h6>
+                              <ul
+                                class="list-unstyled fw-normal text-capitalize small mb-0"
+                              >
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Thực phẩm khô</a
+                                  >
+                                </li>
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Hạt dinh dưỡng</a
+                                  >
+                                </li>
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Bánh kẹo</a
+                                  >
+                                </li>
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Trà các loại</a
+                                  >
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="col-md-3">
+                              <h6
+                                class="fw-bold text-dark text-capitalize mb-3"
+                              >
+                                Rau củ sạch
+                              </h6>
+                              <ul
+                                class="list-unstyled fw-normal text-capitalize small mb-0"
+                              >
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Rau củ sạch Đà Lạt</a
+                                  >
+                                </li>
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Rau củ sạch</a
+                                  >
+                                </li>
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Đặc sản vùng miền</a
+                                  >
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="col-md-3">
+                              <h6
+                                class="fw-bold text-dark text-capitalize mb-3"
+                              >
+                                Thực phẩm tươi sống
+                              </h6>
+                              <ul
+                                class="list-unstyled fw-normal text-capitalize small mb-0"
+                              >
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Thực phẩm tươi sống</a
+                                  >
+                                </li>
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Cá biển</a
+                                  >
+                                </li>
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Hải sản đông lạnh</a
+                                  >
+                                </li>
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Chả các loại</a
+                                  >
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="col-md-3">
+                              <h6
+                                class="fw-bold text-dark text-capitalize mb-3"
+                              >
+                                Danh mục bán chạy
+                              </h6>
+                              <ul
+                                class="list-unstyled fw-normal text-capitalize small mb-0"
+                              >
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Hoa quả nhập khẩu</a
+                                  >
+                                </li>
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Gia vị</a
+                                  >
+                                </li>
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Bột nông sản</a
+                                  >
+                                </li>
+                                <li class="py-1">
+                                  <a
+                                    href="#"
+                                    class="text-decoration-none text-secondary"
+                                    >Đồ ngâm rượu</a
+                                  >
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link text-dark" href="#"
+                        >Quà Biếu Quà Tết</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link text-dark" href="#"
+                        >Kiến Thức Nông Sản</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link text-dark" href="#"
+                        >Nhượng Quyền Thương Hiệu</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link text-dark" href="contact.html"
+                        >Liên Hệ</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breadcrumb Navigation -->
+      <div class="bg-light-blue">
+        <nav aria-label="breadcrumb" class="container">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a href="index.html" class="text-decoration-none text-success"
+                >Trang chủ</a
+              >
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Gian hàng
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </header>
 
     <!-- Section Chính: Checkout -->
     <main class="container my-5">
@@ -357,8 +830,157 @@
       </form>
     </main>
 
-    <!-- Footer (Chờ copy từ index.html) -->
-    <footer></footer>
+    <!-- Footer-->
+    <footer class="bg-primary-green-dark text-white pt-5 mt-5">
+      <div class="container">
+        <div class="row">
+          <!-- Cột 1: Thông tin công ty -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <h5 class="fw-bold mb-4 text-uppercase">
+              Công ty Cổ phần Phát triển FreshFarm
+            </h5>
+            <p class="small mb-2">
+              Số ĐKKD: 0108783652 do Sở Kế hoạch và Đầu tư Thành phố Hà Nội cấp
+              ngày 14/06/2019
+            </p>
+            <p class="small mb-2">
+              <i class="fa-solid fa-location-dot me-2"></i> Địa chỉ: 11 Kim Đồng
+              | đường Giáp Bát | phường Tương Mai | Thành phố Hà Nội
+            </p>
+            <p class="small mb-2">
+              <i class="fa-regular fa-clock me-2"></i> Giờ mở cửa 07:00 - 12:00
+              và 13:30 - 22:00 hằng ngày
+            </p>
+            <p class="small mb-2">
+              <i class="fa-solid fa-envelope me-2"></i> Email:
+              info@freshfarm.com
+            </p>
+            <p class="small mb-3">
+              <i class="fa-solid fa-globe me-2"></i> Website: www.freshfarm.com
+            </p>
+            <div class="d-flex align-items-center gap-2 mt-2">
+              <a
+                href="http://online.gov.vn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="d-inline-block"
+              >
+                <img
+                  src="./image/bo_cong_thuong.png"
+                  alt="Đã thông báo Bộ Công Thương"
+                  class="badge-img"
+                />
+              </a>
+              <a
+                href="https://www.dmca.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="d-inline-block"
+              >
+                <img
+                  src="./image/dmca.png"
+                  alt="DMCA Protected"
+                  class="badge-img"
+                />
+              </a>
+            </div>
+          </div>
+
+          <!-- Cột 2: Hỗ trợ khách hàng -->
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h5 class="fw-bold mb-4">Hỗ trợ khách hàng</h5>
+            <ul class="list-unstyled footer-links small">
+              <li class="mb-2"><a href="#">Chính sách giao hàng</a></li>
+              <li class="mb-2"><a href="#">Chính sách đổi trả</a></li>
+              <li class="mb-2"><a href="#">Chính sách hoàn tiền</a></li>
+              <li class="mb-2"><a href="#">Chính sách xuất hóa đơn</a></li>
+              <li class="mb-2"><a href="#">Chính sách bảo mật</a></li>
+              <li class="mb-2"><a href="#">Chính sách thanh toán</a></li>
+              <li class="mb-2"><a href="#">Các câu hỏi thường gặp</a></li>
+              <li class="mb-2"><a href="#">Hướng dẫn đặt hàng</a></li>
+              <li class="mb-2"><a href="#">Quyền và nghĩa vụ</a></li>
+              <li class="mb-2"><a href="#">Xử lý khiếu nại</a></li>
+            </ul>
+          </div>
+
+          <!-- Cột 3: Về chúng tôi -->
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h5 class="fw-bold mb-4">Về chúng tôi</h5>
+            <ul class="list-unstyled footer-links small">
+              <li class="mb-2">
+                <a href="#">Giới thiệu Nông sản FreshFarm</a>
+              </li>
+              <li class="mb-2"><a href="#">Liên hệ</a></li>
+              <li class="mb-2"><a href="#">Kênh YouTube</a></li>
+              <li class="mb-2"><a href="#">Tuyển dụng</a></li>
+              <li class="mb-2"><a href="#">Danh sách cửa hàng</a></li>
+            </ul>
+          </div>
+
+          <!-- Cột 4: Chăm sóc khách hàng -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <h5 class="fw-bold mb-4">Chăm sóc khách hàng</h5>
+            <div class="d-flex align-items-center mb-4">
+              <i class="fa-solid fa-phone fs-4 me-3"></i>
+              <span class="fs-4 fw-bold">Hotline: 0866.918.366</span>
+            </div>
+
+            <h6 class="fw-bold mb-3">Theo dõi Nông sản FreshFarm</h6>
+            <div class="social-icons mb-4">
+              <a
+                href="#"
+                class="bg-primary text-white rounded-circle d-inline-flex justify-content-center align-items-center"
+                style="width: 35px; height: 35px"
+                ><i class="fa-brands fa-facebook-f"></i
+              ></a>
+              <a
+                href="#"
+                class="bg-info text-white rounded-circle d-inline-flex justify-content-center align-items-center mx-1"
+                style="width: 35px; height: 35px"
+                >Zalo</a
+              >
+              <a
+                href="#"
+                class="bg-info text-white rounded-circle d-inline-flex justify-content-center align-items-center mx-1"
+                style="width: 35px; height: 35px"
+                ><i class="fa-brands fa-twitter"></i
+              ></a>
+              <a
+                href="#"
+                class="bg-danger text-white rounded-circle d-inline-flex justify-content-center align-items-center"
+                style="width: 35px; height: 35px"
+                ><i class="fa-brands fa-pinterest-p"></i
+              ></a>
+            </div>
+
+            <h6 class="fw-bold mb-3">Mua hàng trên Shopee</h6>
+            <div class="d-flex gap-2">
+              <a
+                href="#"
+                class="btn btn-lg d-flex align-items-center text-white"
+                ><i
+                  class="fa-solid fa-bag-shopping me-1 text-custom-orange"
+                ></i>
+                Hà Nội</a
+              >
+              <a
+                href="#"
+                class="btn btn-lg d-flex align-items-center text-white"
+                ><i
+                  class="fa-solid fa-bag-shopping me-1 text-custom-orange"
+                ></i>
+                TP.HCM</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="footer-copyright py-3 text-center small text-white">
+        Tất cả bản quyền thuộc về freshfarm.com - All right reserved
+      </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

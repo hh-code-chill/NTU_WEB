@@ -101,6 +101,8 @@
               <div
                 class="bg-primary-green text-white py-2 px-3 fw-bold cursor-pointer d-flex justify-content-between align-items-center"
                 id="categoryMenuToggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
               >
                 <span><i class="fa-solid fa-bars me-2"></i> Chuyên mục</span>
                 <i class="fa-solid fa-chevron-down small"></i>
@@ -108,7 +110,7 @@
 
               <!-- Dropdown Menu Chuyên mục -->
               <div
-                class="category-dropdown bg-white border shadow-sm position-absolute w-100 start-0 d-none"
+                class="category-dropdown dropdown-menu bg-white border shadow-sm position-absolute w-100 start-0 m-0"
                 id="categoryDropdown"
               >
                 <ul class="list-unstyled mb-0">
@@ -475,23 +477,14 @@
       <!-- Breadcrumb Navigation -->
       <div class="bg-light-blue">
         <nav aria-label="breadcrumb" class="container">
-          <ol class="breadcrumb small">
+          <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
               <a href="index.html" class="text-decoration-none text-success"
                 >Trang chủ</a
               >
             </li>
-            <li class="breadcrumb-item">
-              <a href="shop.html" class="text-decoration-none text-success"
-                >Sản phẩm</a
-              >
-            </li>
-            <li
-              class="breadcrumb-item active"
-              id="breadcrumb-product-name"
-              aria-current="page"
-            >
-              Ba Kích Tím Khô Rút Lõi
+            <li class="breadcrumb-item active" aria-current="page">
+              Gian hàng
             </li>
           </ol>
         </nav>
@@ -1112,7 +1105,7 @@
       </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer-->
     <footer class="bg-primary-green-dark text-white pt-5 mt-5">
       <div class="container">
         <div class="row">

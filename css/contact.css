@@ -12,19 +12,16 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif, Arial, sans-serif;
 }
 
-body {
-  background-color: var(--light-gray);
-  color: var(--text-dark);
-  line-height: 1.6;
-}
-
-.container {
+main.contact-main {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  background-color: var(--light-gray);
+  color: var(--text-dark);
+  line-height: 1.6;
+  font-family: 'Roboto', sans-serif, Arial, sans-serif;
 }
 
 /* Header */
