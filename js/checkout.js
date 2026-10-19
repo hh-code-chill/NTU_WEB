@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+$(function () {
   renderCheckoutSummary();
   setupCheckoutForm();
   setupPaymentMethodToggle();
@@ -6,30 +6,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 1. RENDER DANH SÁCH SẢN PHẨM & TỔNG TIỀN TỪ GIỎ HÀNG
 function renderCheckoutSummary() {
-  const container = document.getElementById("checkoutOrderItems");
-  const subtotalEl = document.getElementById("checkoutSubtotal");
-  const disshipEl = document.getElementById("checkoutShip");
-  const discountEl = document.getElementById("checkoutDiscount");
-  const discountLabelEl = document.getElementById("checkoutDiscountLabel");
-  const grandTotalEl = document.getElementById("checkoutGrandTotal");
+  const $container = $("#checkoutOrderItems");
+  const $subtotal = $("#checkoutSubtotal");
+  const $shipping = $("#checkoutShip");
+  const $discount = $("#checkoutDiscount");
+  const $discountLabel = $("#checkoutDiscountLabel");
+  const $grandTotal = $("#checkoutGrandTotal");
 
-  if (!container) return;
+  if (!$container.length) return;
 
   // Lấy dữ liệu từ hàm getCart() có sẵn trong cart.js
   const cart = typeof getCart === "function" ? getCart() : [];
 
   // Nếu giỏ hàng rỗng, cảnh báo và quay về giỏ hàng
   if (cart.length === 0) {
-    container.innerHTML = `
+    $container.html(`
       <div class="text-center py-4 text-muted">
         <i class="bi bi-cart-x fs-2 d-block mb-2"></i>
         Giỏ hàng của bạn đang trống.
       </div>
-    `;
-    if (subtotalEl) subtotalEl.textContent = "0 đ";
-    if (discountEl) discountEl.textContent = "-0đ";
-    if (disshipEl) disshipEl.textContent = "0đ";
-    if (grandTotalEl) grandTotalEl.textContent = "0 đ";
+    `);
+    $subtotal.text("0 đ");
+    $discount.text("-0đ");
+    $shipping.text("0đ");
+    $grandTotal.text("0 đ");
     return;
   }
 
@@ -59,7 +59,7 @@ function renderCheckoutSummary() {
     `;
   });
 
-  container.innerHTML = htmlContent;
+  $container.html(htmlContent);
 
   // Cập nhật Tạm tính và Tổng cộng
   const formattedSubtotal =
@@ -67,7 +67,7 @@ function renderCheckoutSummary() {
       ? formatCurrency(subtotal)
       : subtotal.toLocaleString("vi-VN") + "đ";
 
-  const couponCode = localStorage.getItem("freshfarm_applied_coupon");
+  const couponCode = localStorage.getItem(COUPON_STORAGE_KEY);
   const coupon =
     typeof VALID_COUPONS !== "undefined" && couponCode
       ? VALID_COUPONS[couponCode]
@@ -82,64 +82,61 @@ function renderCheckoutSummary() {
   const shippingFee =
     subtotal > 0 && subtotal < FREESHIP_THRESHOLD ? DEFAULT_SHIPPING_FEE : 0;
 
-  if (subtotalEl) subtotalEl.textContent = formattedSubtotal;
-  if (discountEl) {
+  if ($subtotal.length) $subtotal.text(formattedSubtotal);
+  if ($discount.length) {
     const formattedDiscount =
       typeof formatCurrency === "function"
         ? formatCurrency(discount)
         : discount.toLocaleString("vi-VN") + "đ";
-    discountEl.textContent = `-${formattedDiscount}`;
+    $discount.text(`-${formattedDiscount}`);
   }
-  if (discountLabelEl) {
-    discountLabelEl.textContent = coupon
-      ? `Giảm giá (${couponCode})`
-      : "Giảm giá";
+  if ($discountLabel.length) {
+    $discountLabel.text(
+      coupon ? `Giảm giá (${couponCode})` : "Giảm giá",
+    );
   }
-  if (disshipEl) {
-    disshipEl.textContent =
+  if ($shipping.length) {
+    $shipping.text(
       shippingFee === 0
         ? "Miễn phí"
         : typeof formatCurrency === "function"
           ? formatCurrency(shippingFee)
-          : shippingFee.toLocaleString("vi-VN") + "đ";
+          : shippingFee.toLocaleString("vi-VN") + "đ",
+    );
   }
-  if (grandTotalEl) {
+  if ($grandTotal.length) {
     const total = Math.max(0, subtotal - discount + shippingFee);
-    grandTotalEl.textContent =
+    $grandTotal.text(
       typeof formatCurrency === "function"
         ? formatCurrency(total)
-        : total.toLocaleString("vi-VN") + "đ";
+        : total.toLocaleString("vi-VN") + "đ",
+    );
   }
 }
 
 // 2. XỬ LÝ ẨN/HIỆN LOGO NGÂN HÀNG THEO PHƯƠNG THỨC THANH TOÁN
 function setupPaymentMethodToggle() {
-  const paymentRadios = document.querySelectorAll(
-    'input[name="paymentMethod"]',
-  );
-  const paymentLogos = document.getElementById("paymentLogos");
+  const $paymentLogos = $("#paymentLogos");
 
-  if (!paymentLogos) return;
+  if (!$paymentLogos.length) return;
 
-  paymentRadios.forEach((radio) => {
-    radio.addEventListener("change", (e) => {
-      if (e.target.value === "BANK" || e.target.value === "ONEPAY") {
-        paymentLogos.classList.remove("d-none");
-      } else {
-        paymentLogos.classList.add("d-none");
-      }
-    });
+  $('input[name="paymentMethod"]').on("change", function () {
+    if (this.value === "BANK" || this.value === "ONEPAY") {
+      $paymentLogos.removeClass("d-none");
+    } else {
+      $paymentLogos.addClass("d-none");
+    }
   });
 }
 
 // 3. XỬ LÝ VALIDATE FORM VÀ SỰ KIỆN ĐẶT HÀNG
 function setupCheckoutForm() {
-  const form = document.getElementById("checkoutForm");
-  if (!form) return;
+  const $form = $("#checkoutForm");
+  if (!$form.length) return;
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  $form.on("submit", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
 
     // Kiểm tra giỏ hàng có sản phẩm không
     const cart = typeof getCart === "function" ? getCart() : [];
@@ -152,10 +149,10 @@ function setupCheckoutForm() {
     }
 
     // Kiểm tra tính hợp lệ của Form HTML5
-    if (!form.checkValidity()) {
-      form.classList.add("was-validated");
+    if (!this.checkValidity()) {
+      $form.addClass("was-validated");
       // Tự động cuộn tới vị trí ô chưa điền đúng
-      const firstInvalid = form.querySelector(":invalid");
+      const firstInvalid = $form.find(":invalid")[0];
       if (firstInvalid) {
         firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
         firstInvalid.focus();
@@ -170,8 +167,8 @@ function setupCheckoutForm() {
     showSuccessModal(demoOrderCode);
 
     // Xóa giỏ hàng sau khi đặt thành công
-    localStorage.removeItem("freshfarm_cart");
-    localStorage.removeItem("freshfarm_applied_coupon");
+    localStorage.removeItem(CART_STORAGE_KEY);
+    localStorage.removeItem(COUPON_STORAGE_KEY);
     if (typeof updateCartBadge === "function") {
       updateCartBadge();
     }
@@ -181,8 +178,7 @@ function setupCheckoutForm() {
 // 4. HIỂN THỊ POP-UP (MODAL) THÔNG BÁO THÀNH CÔNG VÀ COPY MÃ ĐƠN HÀNG
 function showSuccessModal(orderCode) {
   // Xóa modal cũ nếu có
-  const oldModal = document.getElementById("orderSuccessModal");
-  if (oldModal) oldModal.remove();
+  $("#orderSuccessModal").remove();
 
   // Tạo phần tử HTML Pop-up
   const modalHTML = `
@@ -222,43 +218,32 @@ function showSuccessModal(orderCode) {
   `;
 
   // Chèn Pop-up vào cuối thẻ body
-  document.body.insertAdjacentHTML("beforeend", modalHTML);
+  $("body").append(modalHTML);
 
   // Sự kiện Click để Copy Mã Đơn Hàng
-  const btnCopy = document.getElementById("btnCopyOrderCode");
-  const copyAlert = document.getElementById("copyAlert");
-  const iconCopy = document.getElementById("iconCopy");
+  const $copyAlert = $("#copyAlert");
+  const $copyIcon = $("#iconCopy");
 
-  if (btnCopy) {
-    btnCopy.addEventListener("click", () => {
-      navigator.clipboard
+  $("#btnCopyOrderCode").on("click", () => {
+    navigator.clipboard
         .writeText(orderCode)
         .then(() => {
-          if (copyAlert) copyAlert.classList.remove("d-none");
-          if (iconCopy) {
-            iconCopy.className = "bi bi-check-lg text-success fs-5";
-          }
+          $copyAlert.removeClass("d-none");
+          $copyIcon.attr("class", "bi bi-check-lg text-success fs-5");
           setTimeout(() => {
-            if (copyAlert) copyAlert.classList.add("d-none");
-            if (iconCopy) {
-              iconCopy.className = "bi bi-clipboard text-success fs-5";
-            }
+            $copyAlert.addClass("d-none");
+            $copyIcon.attr("class", "bi bi-clipboard text-success fs-5");
           }, 2500);
         })
         .catch((err) => {
           console.error("Lỗi khi sao chép: ", err);
         });
-    });
-  }
+  });
 
   // Sự kiện Đóng Pop-up
-  const btnClose = document.getElementById("btnCloseModal");
-  if (btnClose) {
-    btnClose.addEventListener("click", () => {
-      const modal = document.getElementById("orderSuccessModal");
-      if (modal) modal.remove();
-      // Chuyển về trang chủ hoặc trang shop sau khi đóng
-      window.location.href = "index.html";
-    });
-  }
+  $("#btnCloseModal").on("click", () => {
+    $("#orderSuccessModal").remove();
+    // Chuyển về trang chủ hoặc trang shop sau khi đóng
+    window.location.href = "index.html";
+  });
 }

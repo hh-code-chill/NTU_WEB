@@ -5,9 +5,9 @@ const CONFIG = {
 };
 
 // Biến lưu trữ trạng thái mảng sản phẩm hiện tại sau khi Filter/Sort
-let currentProducts = [...productsData];
+let currentProducts = [...window.productsData];
 
-document.addEventListener("DOMContentLoaded", () => {
+$(function () {
   initShop();
 });
 
@@ -21,20 +21,16 @@ function initShop() {
 
 // 1. Hàm áp dụng Lọc và Sắp xếp
 function applyFilterAndSort() {
-  let result = [...productsData];
+  let result = [...window.productsData];
 
   // A. Lọc theo Danh mục (Radio)
-  const selectedCategory = document.querySelector(
-    ".filter-category:checked",
-  )?.value;
+  const selectedCategory = $(".filter-category:checked").val();
   if (selectedCategory && selectedCategory !== "all") {
     result = result.filter((item) => item.category === selectedCategory);
   }
 
   // B. Lọc theo Khoảng giá (Radio)
-  const selectedPriceRange = document.querySelector(
-    ".filter-price:checked",
-  )?.value;
+  const selectedPriceRange = $(".filter-price:checked").val();
   if (selectedPriceRange && selectedPriceRange !== "all") {
     result = result.filter((item) => {
       if (selectedPriceRange === "under-100") return item.price < 100000;
@@ -48,15 +44,15 @@ function applyFilterAndSort() {
   }
 
   // C. Lọc theo Thương hiệu (Checkbox - Chọn nhiều)
-  const selectedBrands = Array.from(
-    document.querySelectorAll(".filter-brand:checked"),
-  ).map((cb) => cb.value);
+  const selectedBrands = $(".filter-brand:checked")
+    .map((_, checkbox) => checkbox.value)
+    .get();
   if (selectedBrands.length > 0) {
     result = result.filter((item) => selectedBrands.includes(item.brand));
   }
 
   // D. Sắp xếp (Sort)
-  const sortType = document.getElementById("sort-by")?.value || "default";
+  const sortType = $("#sort-by").val() || "default";
   if (sortType === "price-asc") {
     result.sort((a, b) => a.price - b.price);
   } else if (sortType === "price-desc") {
@@ -82,16 +78,16 @@ function renderUI() {
 
 // Render danh sách sản phẩm theo trang hiện tại
 function renderProductGrid() {
-  const gridContainer = document.getElementById("shop-product-grid");
-  if (!gridContainer) return;
+  const $gridContainer = $("#shop-product-grid");
+  if (!$gridContainer.length) return;
 
   if (currentProducts.length === 0) {
-    gridContainer.innerHTML = `
+    $gridContainer.html(`
       <div class="col-12 text-center py-5">
         <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
         <p class="text-muted fs-5">Không tìm thấy sản phẩm nào phù hợp với bộ lọc!</p>
       </div>
-    `;
+    `);
     return;
   }
 
@@ -101,7 +97,7 @@ function renderProductGrid() {
   const pageProducts = currentProducts.slice(startIndex, endIndex);
 
   // Render thẻ sản phẩm dạng link
-  gridContainer.innerHTML = pageProducts
+  $gridContainer.html(pageProducts
     .map(
       (product) => `
     <div class="col">
@@ -127,18 +123,18 @@ function renderProductGrid() {
     </div>
   `,
     )
-    .join("");
+    .join(""));
 }
 
 // Render nút phân trang
 function renderPagination() {
-  const paginationList = document.getElementById("pagination-list");
-  if (!paginationList) return;
+  const $paginationList = $("#pagination-list");
+  if (!$paginationList.length) return;
 
   const totalPages = Math.ceil(currentProducts.length / CONFIG.itemsPerPage);
 
   if (totalPages <= 1) {
-    paginationList.innerHTML = "";
+    $paginationList.empty();
     return;
   }
 
@@ -147,7 +143,7 @@ function renderPagination() {
   // Nút Previous
   html += `
     <li class="page-item ${CONFIG.currentPage === 1 ? "disabled" : ""}">
-      <button class="page-link" onclick="changePage(${CONFIG.currentPage - 1})">&laquo;</button>
+      <button class="page-link" data-page="${CONFIG.currentPage - 1}">&laquo;</button>
     </li>
   `;
 
@@ -155,7 +151,7 @@ function renderPagination() {
   for (let i = 1; i <= totalPages; i++) {
     html += `
       <li class="page-item ${i === CONFIG.currentPage ? "active" : ""}">
-        <button class="page-link" onclick="changePage(${i})">${i}</button>
+        <button class="page-link" data-page="${i}">${i}</button>
       </li>
     `;
   }
@@ -163,11 +159,11 @@ function renderPagination() {
   // Nút Next
   html += `
     <li class="page-item ${CONFIG.currentPage === totalPages ? "disabled" : ""}">
-      <button class="page-link" onclick="changePage(${CONFIG.currentPage + 1})">&raquo;</button>
+      <button class="page-link" data-page="${CONFIG.currentPage + 1}">&raquo;</button>
     </li>
   `;
 
-  paginationList.innerHTML = html;
+  $paginationList.html(html);
 }
 
 // Chuyển trang
@@ -180,54 +176,29 @@ function changePage(page) {
   renderPagination();
 
   // Cuộn nhẹ lên đầu lưới sản phẩm
-  document
-    .getElementById("shop-product-grid")
-    ?.scrollIntoView({ behavior: "smooth" });
+  $("#shop-product-grid")[0]?.scrollIntoView({ behavior: "smooth" });
 }
 
 // Cập nhật số lượng sản phẩm hiển thị trên Toolbar
 function updateCounter() {
-  const showingCount = document.getElementById("showing-count");
-  if (showingCount) {
-    showingCount.textContent = currentProducts.length;
-  }
+  $("#showing-count").text(currentProducts.length);
 }
 
 // 3. Lắng nghe các sự kiện người dùng tương tác
 function bindEvents() {
-  // Lắng nghe sự kiện chọn Danh mục
-  document.querySelectorAll(".filter-category").forEach((radio) => {
-    radio.addEventListener("change", applyFilterAndSort);
+  $(".filter-category, .filter-price, .filter-brand, #sort-by").on(
+    "change",
+    applyFilterAndSort,
+  );
+
+  $("#pagination-list").on("click", "[data-page]", function () {
+    changePage(Number($(this).data("page")));
   });
 
-  // Lắng nghe sự kiện chọn Khoảng giá
-  document.querySelectorAll(".filter-price").forEach((radio) => {
-    radio.addEventListener("change", applyFilterAndSort);
+  $("#btn-reset-filter").on("click", function () {
+    $("#cat-all, #price-all").prop("checked", true);
+    $(".filter-brand").prop("checked", false);
+    $("#sort-by").val("default");
+    applyFilterAndSort();
   });
-
-  // Lắng nghe sự kiện chọn Thương hiệu
-  document.querySelectorAll(".filter-brand").forEach((checkbox) => {
-    checkbox.addEventListener("change", applyFilterAndSort);
-  });
-
-  // Lắng nghe sự kiện Sắp xếp
-  const sortSelect = document.getElementById("sort-by");
-  if (sortSelect) {
-    sortSelect.addEventListener("change", applyFilterAndSort);
-  }
-
-  // Nút Reset Bộ lọc
-  const btnReset = document.getElementById("btn-reset-filter");
-  if (btnReset) {
-    btnReset.addEventListener("click", () => {
-      document.getElementById("cat-all").checked = true;
-      document.getElementById("price-all").checked = true;
-      document
-        .querySelectorAll(".filter-brand")
-        .forEach((cb) => (cb.checked = false));
-      if (sortSelect) sortSelect.value = "default";
-
-      applyFilterAndSort();
-    });
-  }
 }

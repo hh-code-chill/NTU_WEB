@@ -1,0 +1,47 @@
+:root {
+  --primary-color: #52a851;
+  --secondary-color: #2f842e;
+  --accent-color: #ff6900;
+  --light-yellow: #fff9e6;
+  --dark-color: #1b471b;
+  --text-dark: #333333;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  color: var(--text-dark);
+  background-color: #fff;
+}
+
+.navbar-brand img {
+  height: 40px;
+}
+
+.btn-fresh {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 25px;
+  padding: 8px 20px;
+  transition: all 0.3s ease;
+}
+
+.btn-fresh:hover {
+  background-color: var(--secondary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+footer {
+  background-color: var(--dark-color);
+  color: #fff;
+}
+
+footer a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+footer a:hover {
+  color: var(--primary-color);
+}

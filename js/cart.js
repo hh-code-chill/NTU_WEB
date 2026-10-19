@@ -21,21 +21,18 @@ function formatCurrency(amount) {
 function updateCartBadge() {
   const cart = getCart();
   const totalCount = cart.reduce((total, item) => total + item.quantity, 0);
-  const badges = document.querySelectorAll(".cart-count, .cart-count-badge");
-  badges.forEach((badge) => {
-    badge.textContent = totalCount;
-  });
+  $(".cart-count, .cart-count-badge").text(totalCount);
 }
 
 // Hàm Thêm vào giỏ hàng (Đã cập nhật tách dòng theo Loại & Giao từ)
 function addToCart(product) {
-  let cart = getCart();
+  const cart = getCart();
 
   // Chuẩn hóa dữ liệu đầu vào
   const variant = product.variant || "Mặc định";
   const location = product.location || "Hà Nội";
-  const qtyToAdd =
-    parseInt(product.quantity, 10) > 0 ? parseInt(product.quantity, 10) : 1;
+  const requestedQuantity = parseInt(product.quantity, 10);
+  const qtyToAdd = requestedQuantity > 0 ? requestedQuantity : 1;
 
   // Tạo ID duy nhất cho mỗi biến thể (ID + Loại + Nơi giao)
   const cartItemId = `${product.id}_${variant}_${location}`;
@@ -64,7 +61,7 @@ function addToCart(product) {
 
   saveCart(cart);
 
-  if (document.getElementById("cartBody")) {
+  if ($("#cartBody").length) {
     renderCartPage();
   }
 }
@@ -81,22 +78,22 @@ const FREESHIP_THRESHOLD = 300000;
 const DEFAULT_SHIPPING_FEE = 30000;
 
 function renderCartPage() {
-  const cartEmpty = document.getElementById("cartEmpty");
-  const cartFilled = document.getElementById("cartFilled");
-  const cartBody = document.getElementById("cartBody");
+  const $cartEmpty = $("#cartEmpty");
+  const $cartFilled = $("#cartFilled");
+  const $cartBody = $("#cartBody");
 
-  if (!cartBody || !cartEmpty || !cartFilled) return;
+  if (!$cartBody.length || !$cartEmpty.length || !$cartFilled.length) return;
 
   const cart = getCart();
 
   if (cart.length === 0) {
-    cartEmpty.classList.remove("d-none");
-    cartFilled.classList.add("d-none");
+    $cartEmpty.removeClass("d-none");
+    $cartFilled.addClass("d-none");
     return;
   }
 
-  cartEmpty.classList.add("d-none");
-  cartFilled.classList.remove("d-none");
+  $cartEmpty.addClass("d-none");
+  $cartFilled.removeClass("d-none");
 
   let htmlContent = "";
   cart.forEach((item, index) => {
@@ -123,14 +120,14 @@ function renderCartPage() {
                 <td class="fw-semibold">${formatCurrency(item.price)}</td>
                 <td>
                     <div class="input-group input-group-sm" style="width: 110px;">
-                        <button class="btn btn-outline-secondary" type="button" onclick="changeQuantity(${index}, -1)">-</button>
-                        <input type="number" class="form-control text-center" value="${item.quantity}" min="1" onchange="updateQuantityInput(${index}, this.value)">
-                        <button class="btn btn-outline-secondary" type="button" onclick="changeQuantity(${index}, 1)">+</button>
+                        <button class="btn btn-outline-secondary cart-quantity-change" type="button" data-index="${index}" data-delta="-1">-</button>
+                        <input type="number" class="form-control text-center cart-quantity-input" value="${item.quantity}" min="1" data-index="${index}">
+                        <button class="btn btn-outline-secondary cart-quantity-change" type="button" data-index="${index}" data-delta="1">+</button>
                     </div>
                 </td>
                 <td class="fw-bold text-success">${formatCurrency(itemTotal)}</td>
                 <td class="text-center">
-                    <button class="btn btn-sm btn-outline-danger border-0" onclick="removeItem(${index})" title="Xóa">
+                    <button class="btn btn-sm btn-outline-danger border-0 cart-remove-item" type="button" data-index="${index}" title="Xóa">
                         <i class="bi bi-trash fs-5"></i>
                     </button>
                 </td>
@@ -138,12 +135,12 @@ function renderCartPage() {
         `;
   });
 
-  cartBody.innerHTML = htmlContent;
+  $cartBody.html(htmlContent);
   calculateCartSummary(cart);
 }
 
 function changeQuantity(index, delta) {
-  let cart = getCart();
+  const cart = getCart();
   if (!cart[index]) return;
 
   cart[index].quantity += delta;
@@ -154,11 +151,11 @@ function changeQuantity(index, delta) {
 }
 
 function updateQuantityInput(index, value) {
-  let cart = getCart();
+  const cart = getCart();
   if (!cart[index]) return;
 
-  let newQty = parseInt(value, 10);
-  if (isNaN(newQty) || newQty < 1) newQty = 1;
+  const parsedQuantity = parseInt(value, 10);
+  const newQty = Number.isNaN(parsedQuantity) || parsedQuantity < 1 ? 1 : parsedQuantity;
 
   cart[index].quantity = newQty;
   saveCart(cart);
@@ -166,7 +163,7 @@ function updateQuantityInput(index, value) {
 }
 
 function removeItem(index) {
-  let cart = getCart();
+  const cart = getCart();
   if (confirm("Bạn có chắc muốn xóa sản phẩm này?")) {
     cart.splice(index, 1);
     saveCart(cart);
@@ -198,69 +195,78 @@ function calculateCartSummary(cart) {
     if (discount > subtotal) discount = subtotal;
   }
 
-  let shippingFee =
+  const shippingFee =
     subtotal > 0 && subtotal < FREESHIP_THRESHOLD ? DEFAULT_SHIPPING_FEE : 0;
   const grandTotal = Math.max(0, subtotal - discount + shippingFee);
 
-  document.getElementById("sumSubtotal").textContent = formatCurrency(subtotal);
-  document.getElementById("sumDiscount").textContent =
-    `-${formatCurrency(discount)}`;
-  document.getElementById("sumShipping").textContent =
-    shippingFee === 0 ? "Miễn phí" : formatCurrency(shippingFee);
-  document.getElementById("sumTotal").textContent = formatCurrency(grandTotal);
+  $("#sumSubtotal").text(formatCurrency(subtotal));
+  $("#sumDiscount").text(`-${formatCurrency(discount)}`);
+  $("#sumShipping").text(
+    shippingFee === 0 ? "Miễn phí" : formatCurrency(shippingFee),
+  );
+  $("#sumTotal").text(formatCurrency(grandTotal));
 }
 
 function applyCoupon() {
-  const couponInput = document.getElementById("couponCode");
-  const couponMessage = document.getElementById("couponMessage");
-  if (!couponInput || !couponMessage) return;
+  const $couponInput = $("#couponCode");
+  const $couponMessage = $("#couponMessage");
+  if (!$couponInput.length || !$couponMessage.length) return;
 
-  const code = couponInput.value.trim().toUpperCase();
-  couponInput.value = code;
+  const code = $couponInput.val().trim().toUpperCase();
+  $couponInput.val(code);
 
   if (!code) {
-    couponMessage.textContent = "Vui lòng nhập mã giảm giá.";
-    couponMessage.className = "small mt-1 text-danger";
+    $couponMessage
+      .text("Vui lòng nhập mã giảm giá.")
+      .attr("class", "small mt-1 text-danger");
     return;
   }
 
   const coupon = VALID_COUPONS[code];
   if (!coupon) {
-    couponMessage.textContent = "Mã giảm giá không hợp lệ.";
-    couponMessage.className = "small mt-1 text-danger";
+    $couponMessage
+      .text("Mã giảm giá không hợp lệ.")
+      .attr("class", "small mt-1 text-danger");
     return;
   }
 
   localStorage.setItem(COUPON_STORAGE_KEY, code);
-  couponMessage.textContent = `Đã áp dụng mã ${code} (${coupon.label}).`;
-  couponMessage.className = "small mt-1 text-success";
+  $couponMessage
+    .text(`Đã áp dụng mã ${code} (${coupon.label}).`)
+    .attr("class", "small mt-1 text-success");
   calculateCartSummary(getCart());
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+$(function () {
   updateCartBadge();
-  if (document.getElementById("cartBody")) {
+  if ($("#cartBody").length) {
+    const $cartBody = $("#cartBody");
     renderCartPage();
-    document
-      .getElementById("btnClearCart")
-      ?.addEventListener("click", clearAllCart);
-
-    document
-      .getElementById("btnCoupon")
-      ?.addEventListener("click", applyCoupon);
-    document
-      .getElementById("couponCode")
-      ?.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") applyCoupon();
-      });
+    $("#btnClearCart").on("click", clearAllCart);
+    $("#btnCoupon").on("click", applyCoupon);
+    $("#couponCode").on("keydown", (event) => {
+      if (event.key === "Enter") applyCoupon();
+    });
+    $cartBody.on("click", ".cart-quantity-change", function () {
+      changeQuantity(
+        Number($(this).data("index")),
+        Number($(this).data("delta")),
+      );
+    });
+    $cartBody.on("change", ".cart-quantity-input", function () {
+      updateQuantityInput(Number($(this).data("index")), $(this).val());
+    });
+    $cartBody.on("click", ".cart-remove-item", function () {
+      removeItem(Number($(this).data("index")));
+    });
 
     const appliedCouponCode = localStorage.getItem(COUPON_STORAGE_KEY);
     const appliedCoupon = appliedCouponCode && VALID_COUPONS[appliedCouponCode];
     if (appliedCoupon) {
-      document.getElementById("couponCode").value = appliedCouponCode;
-      const couponMessage = document.getElementById("couponMessage");
-      couponMessage.textContent = `Đã áp dụng mã ${appliedCouponCode} (${appliedCoupon.label}).`;
-      couponMessage.className = "small mt-1 text-success";
+      $("#couponCode").val(appliedCouponCode);
+      $("#couponMessage")
+        .text(`Đã áp dụng mã ${appliedCouponCode} (${appliedCoupon.label}).`)
+        .attr("class", "small mt-1 text-success");
     }
   }
 });
